@@ -1480,6 +1480,24 @@ pre .javascript .function {
   text-align: center;
   font-weight: 400;
 }
+.posts-expand .post-title .post-edit-link {
+  color: #bbb;
+  display: inline-block;
+  float: right;
+  border-bottom: none;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in;
+  transition-delay: 0s;
+  margin-left: -1.2em;
+}
+@media (max-width: 567px) {
+  .posts-expand .post-title .post-edit-link {
+    margin-left: initial;
+  }
+}
+.posts-expand .post-title .post-edit-link:hover {
+  color: #000;
+}
 .posts-expand .post-title-link {
   display: inline-block;
   position: relative;
@@ -1768,6 +1786,9 @@ pre .javascript .function {
   border: 2px solid #333;
   opacity: 1;
 }
+.site-author-image {
+  border-radius: 100%;
+}
 .site-author-name {
   margin: 5px 0 0;
   text-align: center;
@@ -1850,7 +1871,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #ffcc3e;
+  background: #ff60c1;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -1983,7 +2004,7 @@ pre .javascript .function {
 .with-love {
   display: inline-block;
   margin: 0 5px;
-  color: #808080;
+  color: #6c3365;
 }
 .powered-by,
 .theme-info {
