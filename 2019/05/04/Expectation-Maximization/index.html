@@ -108,23 +108,25 @@
 
 
 
-  <meta name="description" content="少即是多，慢即是快">
-<meta property="og:type" content="website">
-<meta property="og:title" content="大絮">
-<meta property="og:url" content="https://Liouliooo.github.io/archives/2018/index.html">
+  <meta name="description" content="&amp;emsp;&amp;emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式&amp;emsp;&amp;emsp;Jensen读作 “延森”，Jensen不等式描述如下： &amp;em">
+<meta name="keywords" content="贝叶斯学派,最大似然估计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Expectation Maximization">
+<meta property="og:url" content="https://Liouliooo.github.io/2019/05/04/Expectation-Maximization/index.html">
 <meta property="og:site_name" content="大絮">
-<meta property="og:description" content="少即是多，慢即是快">
+<meta property="og:description" content="&amp;emsp;&amp;emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式&amp;emsp;&amp;emsp;Jensen读作 “延森”，Jensen不等式描述如下： &amp;em">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-05-04T11:10:31.159Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="大絮">
-<meta name="twitter:description" content="少即是多，慢即是快">
+<meta name="twitter:title" content="Expectation Maximization">
+<meta name="twitter:description" content="&amp;emsp;&amp;emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式&amp;emsp;&amp;emsp;Jensen读作 “延森”，Jensen不等式描述如下： &amp;em">
 
 
 
 
 
 
-  <link rel="canonical" href="https://Liouliooo.github.io/archives/2018/">
+  <link rel="canonical" href="https://Liouliooo.github.io/2019/05/04/Expectation-Maximization/">
 
 
 
@@ -134,7 +136,7 @@
   };
 </script>
 
-  <title>归档 | 大絮</title>
+  <title>Expectation Maximization | 大絮</title>
   
 
 
@@ -183,7 +185,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -271,7 +273,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -313,92 +315,188 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
 
-      
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
-
-        
+  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2019/05/04/Expectation-Maximization/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaXu">
+      <meta itemprop="description" content="少即是多，慢即是快">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大絮">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/11/21/概率/" itemprop="url">
-              
-                <span itemprop="name">概率</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">Expectation Maximization
+              
+            
+          </h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-21T22:43:56+08:00" content="2018-11-21">
-          11-21
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
 
-    </header>
-  </article>
+            
+            
+            
 
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
 
+              
+                
+              
+
+              <time title="创建时间：2019-05-04 13:21:22 / 修改时间：19:10:31" itemprop="dateCreated datePublished" datetime="2019-05-04T13:21:22+08:00">2019-05-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>&emsp;&emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。</p>
+<h1 id="最大似然视角"><a href="#最大似然视角" class="headerlink" title="最大似然视角"></a>最大似然视角</h1><h2 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h2><p>&emsp;&emsp;Jensen读作 “延森”，Jensen不等式描述如下：</p>
+<p>&emsp;&emsp;若 $f(x)$ 是区间 $(a,b)$ 上的凸函数，则对任意的 $x_1,x_2,x_3,…,x_n \in (a,b)$ ，有不等式:</p>
+<p>$$<br>f({ {x_1+x_2+x_3+…+x_n} \over n}) \ge {f(x_1)+f(x_2)+f(x_3)+…+f(x_n) \over n} \tag {1.1}<br>$$</p>
+<p>也可以表示为：</p>
+<p>$$<br>f(E(X)) \ge E(f(X)) \tag {1.2}<br>$$</p>
+<p>当且仅当 $x_1=x_2=x_3=…=x_n$ 时，等号成立。</p>
+<p>&emsp;&emsp;如果 $f(x)$ 为凹函数，则 $\ge$ 号取反。</p>
+<h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><p>&emsp;&emsp;最大似然估计（maximum likelihood estimation, MLE）属于概率论中点估计，也是机器学习中参数估计的重要方法。</p>
+<h1 id="相对熵视角"><a href="#相对熵视角" class="headerlink" title="相对熵视角"></a>相对熵视角</h1><h2 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a>相对熵</h2><h2 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h2>
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/贝叶斯学派/" rel="tag"><i class="fa fa-tag"></i> 贝叶斯学派</a>
+          
+            <a href="/tags/最大似然估计/" rel="tag"><i class="fa fa-tag"></i> 最大似然估计</a>
+          
+        </div>
+      
+
+      
+      
+      
 
       
 
-    </div>
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -419,8 +517,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -452,6 +559,8 @@
                     
                       
                     
+                      
+                    
                     <span class="site-state-item-count">1</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
@@ -467,7 +576,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -507,6 +620,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#最大似然视角"><span class="nav-number">1.</span> <span class="nav-text">最大似然视角</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Jensen不等式"><span class="nav-number">1.1.</span> <span class="nav-text">Jensen不等式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最大似然估计"><span class="nav-number">1.2.</span> <span class="nav-text">最大似然估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相对熵视角"><span class="nav-number">2.</span> <span class="nav-text">相对熵视角</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#相对熵"><span class="nav-number">2.1.</span> <span class="nav-text">相对熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#变分推断"><span class="nav-number">2.2.</span> <span class="nav-text">变分推断</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -638,6 +767,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
 
   
 
