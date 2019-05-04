@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="大絮">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式&amp;emsp;&amp;emsp;Jensen读作 “延森”，Jensen不等式描述如下： &amp;em">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-04T11:10:31.159Z">
+<meta property="og:updated_time" content="2019-05-04T14:25:50.173Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Expectation Maximization">
 <meta name="twitter:description" content="&amp;emsp;&amp;emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式&amp;emsp;&amp;emsp;Jensen读作 “延森”，Jensen不等式描述如下： &amp;em">
@@ -377,7 +377,7 @@
                 
               
 
-              <time title="创建时间：2019-05-04 13:21:22 / 修改时间：19:10:31" itemprop="dateCreated datePublished" datetime="2019-05-04T13:21:22+08:00">2019-05-04</time>
+              <time title="创建时间：2019-05-04 13:21:22 / 修改时间：22:25:50" itemprop="dateCreated datePublished" datetime="2019-05-04T13:21:22+08:00">2019-05-04</time>
             
 
             
@@ -435,13 +435,35 @@
       
         <p>&emsp;&emsp;期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。</p>
 <h1 id="最大似然视角"><a href="#最大似然视角" class="headerlink" title="最大似然视角"></a>最大似然视角</h1><h2 id="Jensen不等式"><a href="#Jensen不等式" class="headerlink" title="Jensen不等式"></a>Jensen不等式</h2><p>&emsp;&emsp;Jensen读作 “延森”，Jensen不等式描述如下：</p>
-<p>&emsp;&emsp;若 $f(x)$ 是区间 $(a,b)$ 上的凸函数，则对任意的 $x_1,x_2,x_3,…,x_n \in (a,b)$ ，有不等式:</p>
-<p>$$<br>f({ {x_1+x_2+x_3+…+x_n} \over n}) \ge {f(x_1)+f(x_2)+f(x_3)+…+f(x_n) \over n} \tag {1.1}<br>$$</p>
-<p>也可以表示为：</p>
-<p>$$<br>f(E(X)) \ge E(f(X)) \tag {1.2}<br>$$</p>
-<p>当且仅当 $x_1=x_2=x_3=…=x_n$ 时，等号成立。</p>
-<p>&emsp;&emsp;如果 $f(x)$ 为凹函数，则 $\ge$ 号取反。</p>
-<h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><p>&emsp;&emsp;最大似然估计（maximum likelihood estimation, MLE）属于概率论中点估计，也是机器学习中参数估计的重要方法。</p>
+<p>&emsp;&emsp;<strong>若 $f(x)$ 是区间 $(a,b)$ 上的凸函数，则对任意的 $x_1,x_2,x_3,…,x_n \in (a,b)$ ，有不等式:</strong></p>
+<script type="math/tex; mode=display">
+f({ {x_1+x_2+x_3+...+x_n} \over n}) \ge {f(x_1)+f(x_2)+f(x_3)+...+f(x_n) \over n} \tag {1.1}</script><p><strong>也可以表示为：</strong></p>
+<script type="math/tex; mode=display">
+f(E(X)) \ge E(f(X)) \tag {1.2}</script><p><strong>当且仅当 $x_1=x_2=x_3=…=x_n$ 时，等号成立。如果 $f(x)$ 为凹函数，则 $\ge$ 号取反。</strong></p>
+<h2 id="最大似然估计"><a href="#最大似然估计" class="headerlink" title="最大似然估计"></a>最大似然估计</h2><p>&emsp;&emsp;最大似然估计（Maximum Likelihood Estimation, MLE）属于概率论中点估计，也是机器学习中参数估计的重要方法。</p>
+<p>&emsp;&emsp;假设数据为 $X=(x_1,x_2,x_3,…,x_N)$，数据在某个概率模型下出现的概率为 </p>
+<script type="math/tex; mode=display">
+P(X|\theta)=p(x_1|\theta)p(x_2|\theta)p(x_3|\theta)...p(x_N|\theta) \tag {1.3}</script><p>&emsp;&emsp;要估计一个合适的参数 $\theta$，确保 $P(X|\theta)$ 取得最大值。因为 $p(x_i) \in [0,1]$，$P(X)$ 连乘的性质会导致其值会接近无穷小，难以计算，所以在 $P(X|\theta)$ 之前加一个对数操作，把连乘转化成连加，再通过求导数求极值的方法进行参数估计。</p>
+<script type="math/tex; mode=display">
+L(X|\theta) = \log P(X|\theta) = \sum_{i}^N \log p(x_i|\theta) \tag {1.4}</script><p>&emsp;&emsp;期望最大化中引入了无法观测的隐变量 $Z$， $Z$ 的作用在于在某种程度上影响了生成可观测数据 $X$ 的概率模型。EM算法推导如下：</p>
+<script type="math/tex; mode=display">
+\begin{align*}
+L(X|\theta) = \log P(X|\theta)  \\ 
+= \sum_{i}^N \log \sum_{z}P(x_i,z_j|\theta)  \\ 
+= \sum_{i}^N \log \sum_{z} Q(z_j) {P(x_i,z_j|\theta) \over Q(z_j)}  \\ 
+\ge \sum_{i}^N \sum_{z} Q(z_j) \log {P(x_i,z_j|\theta) \over Q(z_j)} \tag{1.5}
+\end{align*}</script><p><strong>其中 $(1.5)$ 是由Jensen不等式推导而来，为了使等号成立，得到一个更加紧凑的边界，假设：</strong></p>
+<script type="math/tex; mode=display">
+{P(x_i,z_j|\theta) \over Q(z_j)} = C \tag{1.6}</script><p><strong>推导公式得：</strong></p>
+<script type="math/tex; mode=display">
+\begin{eqnarray*}
+{P(x_i,z_j|\theta) \over Q(z_j)} = C  \\
+\Rightarrow P(x_i,z_j|\theta) = C \cdot Q(z_j) \\
+\Rightarrow \sum_{z} P(x_i,z_j|\theta) = \sum_{z} C \cdot Q(z_j) \\
+\Rightarrow P(x_i|\theta) = C = {P(x_i,z_j|\theta) \over Q(z_j)} \\
+\Rightarrow Q(z_j) = {P(x_i,z_j|\theta) \over P(x_i|\theta)} \\
+Q(z_j) = P(z_j|x_i,\theta) \tag{1.7}
+\end{eqnarray*}</script><hr>
 <h1 id="相对熵视角"><a href="#相对熵视角" class="headerlink" title="相对熵视角"></a>相对熵视角</h1><h2 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a>相对熵</h2><h2 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h2>
       
     </div>
