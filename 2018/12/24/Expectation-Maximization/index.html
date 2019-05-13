@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="大絮">
 <meta property="og:description" content="期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式Jensen读作 “延森”，Jensen不等式描述如下： 若 $f(x)$ 是区间 $(a,b)$ 上的凸函数，">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-06T14:06:45.101Z">
+<meta property="og:updated_time" content="2019-05-13T15:00:34.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Expectation Maximization">
 <meta name="twitter:description" content="期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 最大似然视角Jensen不等式Jensen读作 “延森”，Jensen不等式描述如下： 若 $f(x)$ 是区间 $(a,b)$ 上的凸函数，">
@@ -394,7 +394,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-06 22:06:45" itemprop="dateModified" datetime="2019-05-06T22:06:45+08:00">2019-05-06</time>
+                <time title="修改时间：2019-05-13 23:00:34" itemprop="dateModified" datetime="2019-05-13T23:00:34+08:00">2019-05-13</time>
               
             
           </span>
@@ -459,12 +459,12 @@ P(X|\theta)=p(x_1|\theta)p(x_2|\theta)p(x_3|\theta)...p(x_N|\theta) \tag {1.3}</
 <script type="math/tex; mode=display">
 L(X|\theta) = \log P(X|\theta) = \sum_{i}^N \log p(x_i|\theta) \tag {1.4}</script><p>期望最大化中引入了无法观测的隐变量 $Z$， $Z$ 的作用是在某种程度上影响了生成可观测数据 $X$ 的概率模型。EM算法推导如下：</p>
 <script type="math/tex; mode=display">
-\begin{align*}
+\begin{eqnarray*}
 L(X|\theta) = \log P(X|\theta)  \newline
 = \sum_{i}^N \log \sum_{z}P(x_i,z_j|\theta)  \newline
 = \sum_{i}^N \log \sum_{z} Q(z_j) {P(x_i,z_j|\theta) \over Q(z_j)}  \newline
 \ge \sum_{i}^N \sum_{z} Q(z_j) \log {P(x_i,z_j|\theta) \over Q(z_j)} \tag{1.5}
-\end{align*}</script><p>其中 $(1.5)$ 是由Jensen不等式推导而来，为了使等号成立，得到一个更加紧凑的边界，假设：</p>
+\end{eqnarray*}</script><p>其中 $(1.5)$ 是由Jensen不等式推导而来，为了使等号成立，得到一个更加紧凑的边界，假设：</p>
 <script type="math/tex; mode=display">
 {P(x_i,z_j|\theta) \over Q(z_j)} = C \tag{1.6}</script><p>推导公式得：</p>
 <script type="math/tex; mode=display">
@@ -475,7 +475,7 @@ L(X|\theta) = \log P(X|\theta)  \newline
 \Rightarrow P(x_i|\theta) = C = {P(x_i,z_j|\theta) \over Q(z_j)} \\
 \Rightarrow Q(z_j) = {P(x_i,z_j|\theta) \over P(x_i|\theta)} \\
 Q(z_j) = P(z_j|x_i,\theta) \tag{1.7}
-\end{align*}</script><p>由此可得期望最大化的E-Step和M-Step。EM算法的迭代过程也是不断提高 $L(X|\theta)$函数下界的过程，直到函数收敛，但是不保证收敛到全局最优解。</p>
+\end{align*}</script><p>由此可得期望最大化的E-Step和M-Step。EM算法的迭代过程也是不断提高 $L(X|\theta)$ 函数下界的过程，直到函数收敛，但是不保证收敛到全局最优解。</p>
 <p><strong>E-Step:</strong>  <script type="math/tex">Q(z_j) = p(z_j|x_i,\theta)</script></p>
 <p><strong>M-Step:</strong>  <script type="math/tex">\theta = arg\,\max_{\theta} \sum_{i}^N \sum_{z} Q(z_j) \log {P(x_i,z_j|\theta) \over Q(z_j)}</script></p>
 <p>期望最大化算法的收敛性的证明为：</p>
@@ -493,7 +493,15 @@ L(\theta^{t+1}) \ge Q_{i}^{t}(z_j) \log {p(x_i,z_j|\theta^{t+1}) \over Q_i^{t}(z
 KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2.1} \\
 KL(P||Q) = \int P(x) \log {P(x) \over Q(x)} \tag{2.2}
 \end{align*}</script><p>相对熵详细的讲解，请看<a href="https://liouliooo.com/2018/11/26/Variational-Inference/#more" target="_blank" rel="noopener">变分推断</a>。</p>
-<h2 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h2>
+<h2 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h2><p>变分推断中，依然最大化似然估计 $L(X|\theta)$。</p>
+<script type="math/tex; mode=display">
+\begin{align}
+L(X|\theta) = \log P(X|\theta)  \\
+= \log {P(X,Z|\theta) \over P(Z|X,\theta)}  \\
+= \log P(X,Z|\theta) - \log P(Z|X,\theta) + \log Q(Z) - \log Q(Z)  \\
+= \log P(X,Z|\theta) - \log Q(Z) - \log {P(Z|X,\theta) \over Q(Z)}  \tag{2.3}
+\end{align}</script><p>得到 $(2.3)$ 式之后，对两边同时针对 $Q(Z)$ 取期望。</p>
+
       
     </div>
 
