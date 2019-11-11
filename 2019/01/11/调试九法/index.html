@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","width":240,"display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="理解系统这是第一条规则，因为它是最重要的。 阅读手册它会告诉你在使用除草机时，要在除草头上涂润滑油，这样除草绳就不会被烧化。（参考设计和样本程序给出了产品的一种使用方式，有时这些就是能获得的全部文档了。但是，在使用这些设计时一定要注意，创建他们的人往往只了解他们的产品，而没有遵循好的设计实践，或者不是为真实应用而设计的。不能随便照搬这些设计，很有可能有bug。） 仔细阅读每个细节有关微处理器如何处">
+<meta name="keywords" content="方法论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="调试九法">
+<meta property="og:url" content="https://Liouliooo.github.io/2019/01/11/调试九法/index.html">
+<meta property="og:site_name" content="大絮">
+<meta property="og:description" content="理解系统这是第一条规则，因为它是最重要的。 阅读手册它会告诉你在使用除草机时，要在除草头上涂润滑油，这样除草绳就不会被烧化。（参考设计和样本程序给出了产品的一种使用方式，有时这些就是能获得的全部文档了。但是，在使用这些设计时一定要注意，创建他们的人往往只了解他们的产品，而没有遵循好的设计实践，或者不是为真实应用而设计的。不能随便照搬这些设计，很有可能有bug。） 仔细阅读每个细节有关微处理器如何处">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-11T14:40:41.761Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="调试九法">
+<meta name="twitter:description" content="理解系统这是第一条规则，因为它是最重要的。 阅读手册它会告诉你在使用除草机时，要在除草头上涂润滑油，这样除草绳就不会被烧化。（参考设计和样本程序给出了产品的一种使用方式，有时这些就是能获得的全部文档了。但是，在使用这些设计时一定要注意，创建他们的人往往只了解他们的产品，而没有遵循好的设计实践，或者不是为真实应用而设计的。不能随便照搬这些设计，很有可能有bug。） 仔细阅读每个细节有关微处理器如何处">
+
+
+
+
+
+
+  <link rel="canonical" href="https://Liouliooo.github.io/2019/01/11/调试九法/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>调试九法 | 大絮</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大絮</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2019/01/11/调试九法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaXu">
+      <meta itemprop="description" content="少即是多，慢即是快">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大絮">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">调试九法
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-11 21:32:41" itemprop="dateCreated datePublished" datetime="2019-01-11T21:32:41+08:00">2019-01-11</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-11 22:40:41" itemprop="dateModified" datetime="2019-11-11T22:40:41+08:00">2019-11-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="理解系统"><a href="#理解系统" class="headerlink" title="理解系统"></a>理解系统</h1><p>这是第一条规则，因为它是最重要的。</p>
+<h2 id="阅读手册"><a href="#阅读手册" class="headerlink" title="阅读手册"></a>阅读手册</h2><p>它会告诉你在使用除草机时，要在除草头上涂润滑油，这样除草绳就不会被烧化。（参考设计和样本程序给出了产品的一种使用方式，有时这些就是能获得的全部文档了。但是，在使用这些设计时一定要注意，创建他们的人往往只了解他们的产品，而没有遵循好的设计实践，或者不是为真实应用而设计的。不能随便照搬这些设计，很有可能有bug。）</p>
+<h2 id="仔细阅读每个细节"><a href="#仔细阅读每个细节" class="headerlink" title="仔细阅读每个细节"></a>仔细阅读每个细节</h2><p>有关微处理器如何处理中断的详细信息就隐藏在数据手册的第xx页。</p>
+<h2 id="掌握基本知识"><a href="#掌握基本知识" class="headerlink" title="掌握基本知识"></a>掌握基本知识</h2><p>电锯本来就会发出很大的噪声。</p>
+<h2 id="了解工作流程"><a href="#了解工作流程" class="headerlink" title="了解工作流程"></a>了解工作流程</h2><p>引擎的转速可能与轮胎的转速不同，这是由传动轴造成的。</p>
+<h2 id="了解工具"><a href="#了解工具" class="headerlink" title="了解工具"></a>了解工具</h2><p>弄清楚体温表的哪一端才是用来测量体温的，弄清楚Glitch-Matic逻辑分析器的强大功能是如何使用的。</p>
+<h2 id="查阅细节"><a href="#查阅细节" class="headerlink" title="查阅细节"></a>查阅细节</h2><p>连爱因斯坦都会查阅细节，而Kneejerk却盲目相信自己的记忆力。</p>
+<hr>
+<h1 id="制造失败"><a href="#制造失败" class="headerlink" title="制造失败"></a>制造失败</h1><p>虽然看起来很简单，但如果不制造失败的话，调试就会变得很困难。</p>
+<h2 id="制造失败-1"><a href="#制造失败-1" class="headerlink" title="制造失败"></a>制造失败</h2><p>目的是为了观察它，找到原因，并检查是否已修复。</p>
+<h2 id="从头开始"><a href="#从头开始" class="headerlink" title="从头开始"></a>从头开始</h2><p>修车工需要知道汽车车窗在被冻结之前你洗过车。</p>
+<h2 id="引发失败"><a href="#引发失败" class="headerlink" title="引发失败"></a>引发失败</h2><p>用喷水管向楼宇的那扇窗子喷水。</p>
+<h2 id="但不要模拟失败"><a href="#但不要模拟失败" class="headerlink" title="但不要模拟失败"></a>但不要模拟失败</h2><p>用喷水管向那扇窗子喷水。而不要向另一扇不同的，“类似的”窗子喷水。</p>
+<h2 id="查找不受你控制的条件（正是它导致了间歇性失败）"><a href="#查找不受你控制的条件（正是它导致了间歇性失败）" class="headerlink" title="查找不受你控制的条件（正是它导致了间歇性失败）"></a>查找不受你控制的条件（正是它导致了间歇性失败）</h2><p>改变能够改变的每件事情，震动、摇晃、扭曲，直到再现失败。</p>
+<h2 id="记录每件事情，并找到间隙性bug的特征"><a href="#记录每件事情，并找到间隙性bug的特征" class="headerlink" title="记录每件事情，并找到间隙性bug的特征"></a>记录每件事情，并找到间隙性bug的特征</h2><p>我们的绑定系统总是只在呼叫顺序错乱时才会失败。</p>
+<h2 id="不要过于相信统计数据"><a href="#不要过于相信统计数据" class="headerlink" title="不要过于相信统计数据"></a>不要过于相信统计数据</h2><p>绑定问题看起来与时间段有关，但实际上真正的原因是当地的年轻人占用了电话线路。</p>
+<h2 id="要认识到“那”是可能发生的"><a href="#要认识到“那”是可能发生的" class="headerlink" title="要认识到“那”是可能发生的"></a>要认识到“那”是可能发生的</h2><p>甚至冰激凌的口味也会影响汽车的发动。</p>
+<h2 id="永远不要丢掉一个调试工具"><a href="#永远不要丢掉一个调试工具" class="headerlink" title="永远不要丢掉一个调试工具"></a>永远不要丢掉一个调试工具</h2><p>自动击球板可能在某一天就会排上用场。</p>
+<hr>
+<h1 id="不要想，而要看"><a href="#不要想，而要看" class="headerlink" title="不要想，而要看"></a>不要想，而要看</h1><p>凭空想象，问题可能有几千条原因。而实际的原因只有去看了才能发现。</p>
+<h2 id="观察失败"><a href="#观察失败" class="headerlink" title="观察失败"></a>观察失败</h2><p>高级工程师看到了真实的问题，并且能够找到原因。而初级工程师认为他们知道错误发生在哪里，结果他们修复的地方根本没有出错。</p>
+<h2 id="查看细节"><a href="#查看细节" class="headerlink" title="查看细节"></a>查看细节</h2><p>听到水泵似乎发出声音时不要停下来。到地下室查明是哪个水泵。</p>
+<h2 id="植入插装工具"><a href="#植入插装工具" class="headerlink" title="植入插装工具"></a>植入插装工具</h2><p>使用源代码调试器、调试日志、状态信息、信号灯和臭鸡蛋的气味。</p>
+<h2 id="添加外部插装工具"><a href="#添加外部插装工具" class="headerlink" title="添加外部插装工具"></a>添加外部插装工具</h2><p>使用分析器、示波器、量表、金属检测仪、心电图仪和肥皂泡。</p>
+<h2 id="不要害怕深入研究"><a href="#不要害怕深入研究" class="headerlink" title="不要害怕深入研究"></a>不要害怕深入研究</h2><p>虽然它是软件成品，但它出问题了，你必须打开并修复它。</p>
+<h2 id="注意海森堡效应"><a href="#注意海森堡效应" class="headerlink" title="注意海森堡效应"></a>注意海森堡效应</h2><p>不要让仪器影响了系统。</p>
+<h2 id="猜测只是为了确定搜索的重点"><a href="#猜测只是为了确定搜索的重点" class="headerlink" title="猜测只是为了确定搜索的重点"></a>猜测只是为了确定搜索的重点</h2><p>大胆的猜测内存时序发生了错误，但在修复之前应该先查看它。</p>
+<hr>
+<h1 id="分而治之（调试的核心）"><a href="#分而治之（调试的核心）" class="headerlink" title="分而治之（调试的核心）"></a>分而治之<em>（调试的核心）</em></h1><p>当bug的藏身之地不断的被缩小一半时，他将很难再隐藏下去。</p>
+<h2 id="通过逐次逼近搜索范围"><a href="#通过逐次逼近搜索范围" class="headerlink" title="通过逐次逼近搜索范围"></a>通过逐次逼近搜索范围</h2><p>猜测1~100内的一个数字，只需7次。（2的7次方等于128）</p>
+<h2 id="确定范围"><a href="#确定范围" class="headerlink" title="确定范围"></a>确定范围</h2><p>如果数字是135，而你却认为它在1~100以内，那么你必须扩大范围。</p>
+<h2 id="确定你位于bug的哪一侧"><a href="#确定你位于bug的哪一侧" class="headerlink" title="确定你位于bug的哪一侧"></a>确定你位于bug的哪一侧</h2><p>如果你所在的位置有排放物，则排放管就在上游。如果没有排放物，则排放管就在下游。</p>
+<h2 id="使用易于查看的测试模式"><a href="#使用易于查看的测试模式" class="headerlink" title="使用易于查看的测试模式"></a>使用易于查看的测试模式</h2><p>从干净、清澈的水开始，以便当排放物进入河流中时很容易看到它。</p>
+<h2 id="从有问题的一端开始搜索"><a href="#从有问题的一端开始搜索" class="headerlink" title="从有问题的一端开始搜索"></a>从有问题的一端开始搜索</h2><p>如果你验证的是正确的部分，那么需要验证的地方太多了。应该从有问题的地方开始，然后向后追查原因。</p>
+<h2 id="修复已知bug。Bug互相保护，互相隐藏"><a href="#修复已知bug。Bug互相保护，互相隐藏" class="headerlink" title="修复已知bug。Bug互相保护，互相隐藏"></a>修复已知bug。Bug互相保护，互相隐藏</h2><p>因此一旦找到，立即修复他们。</p>
+<h2 id="首先消除噪声干扰"><a href="#首先消除噪声干扰" class="headerlink" title="首先消除噪声干扰"></a>首先消除噪声干扰</h2><p>注意那么导致系统问题的干扰因素。但对一些无足轻重的问题不要过于极端，也不要为了追求完美而去修改所有地方。</p>
+<hr>
+<h1 id="一次只改一个地方"><a href="#一次只改一个地方" class="headerlink" title="一次只改一个地方"></a>一次只改一个地方</h1><p>我们在生活中要有一点先见之明。如果你所做的更改没有起到预期的作用，那么就把它改回来。他们可能会产生无法预料的影响。</p>
+<h2 id="隔离关键因素"><a href="#隔离关键因素" class="headerlink" title="隔离关键因素"></a>隔离关键因素</h2><p>如果你在检查日照时间的影响，就不要改变灌溉方案。</p>
+<h2 id="用双手抓住黄铜杆"><a href="#用双手抓住黄铜杆" class="headerlink" title="用双手抓住黄铜杆"></a>用双手抓住黄铜杆</h2><p>如果你在不知道具体发生了什么问题的情况下就试图去修理核潜艇，可能会引发一次水下的切尔诺贝利爆炸。</p>
+<h2 id="一次只改一个测试"><a href="#一次只改一个测试" class="headerlink" title="一次只改一个测试"></a>一次只改一个测试</h2><p>我之所以知道我的VGA采集相位被破坏了，就是因为其他东西都没有发生改变。</p>
+<h2 id="与正常情况进行比较"><a href="#与正常情况进行比较" class="headerlink" title="与正常情况进行比较"></a>与正常情况进行比较</h2><p>如果所有出错的情况都有一些特征，而这些特征是正常情况所没有的，那么你就找到了问题所在。</p>
+<h2 id="确定自从上一次正常工作以来你改变了什么地方"><a href="#确定自从上一次正常工作以来你改变了什么地方" class="headerlink" title="确定自从上一次正常工作以来你改变了什么地方"></a>确定自从上一次正常工作以来你改变了什么地方</h2><p>我的工友改变了唱机转盘上的唱头，因此这是一个很好的调试起点。</p>
+<hr>
+<h1 id="保持审计跟踪"><a href="#保持审计跟踪" class="headerlink" title="保持审计跟踪"></a>保持审计跟踪</h1><p>不要只是在心里记住“保持审计跟踪”这条规则，而要把它写下来。</p>
+<h2 id="把你的操作、操作顺序和结果全部记录下来"><a href="#把你的操作、操作顺序和结果全部记录下来" class="headerlink" title="把你的操作、操作顺序和结果全部记录下来"></a>把你的操作、操作顺序和结果全部记录下来</h2><p>你上一次喝咖啡是什么时候？你的头痛是从什么时候开始的？</p>
+<h2 id="要知道，任何细节都可能是重要的"><a href="#要知道，任何细节都可能是重要的" class="headerlink" title="要知道，任何细节都可能是重要的"></a>要知道，任何细节都可能是重要的</h2><p>视频压缩芯片的崩溃是由于格子衬衫造成的。</p>
+<h2 id="把事件关联到一起"><a href="#把事件关联到一起" class="headerlink" title="把事件关联到一起"></a>把事件关联到一起</h2><p>“它发出噪声，从21:04:53开始，持续4秒”比仅仅说“它发出噪声”要好的多。</p>
+<h2 id="用有设计的审计跟踪在测试中也非常有用"><a href="#用有设计的审计跟踪在测试中也非常有用" class="headerlink" title="用有设计的审计跟踪在测试中也非常有用"></a>用有设计的审计跟踪在测试中也非常有用</h2><p>软件配置控制工具可以告诉你哪次修订引入了bug。</p>
+<h2 id="把事情记录下来！"><a href="#把事情记录下来！" class="headerlink" title="把事情记录下来！"></a>把事情记录下来！</h2><p>无论那个时刻多么恐怖，都要把它记录到备忘录中，这样你才不会忘记。</p>
+<hr>
+<h1 id="检查插头"><a href="#检查插头" class="headerlink" title="检查插头"></a>检查插头</h1><p>一些显而易见的假设往往是错误的。请恕我赘述，假设错误通常是最容易修复的错误。</p>
+<h2 id="置疑你的假设"><a href="#置疑你的假设" class="headerlink" title="置疑你的假设"></a>置疑你的假设</h2><p>是否运行了正确的代码？是不是燃气用完了？插头是否已插好？</p>
+<h2 id="从头开始-1"><a href="#从头开始-1" class="headerlink" title="从头开始"></a>从头开始</h2><p>是否正确地对内存进行了初始化？是否按了除草机上的“primer bulb”按钮？开关是否已打开？</p>
+<h2 id="对工具进行测试"><a href="#对工具进行测试" class="headerlink" title="对工具进行测试"></a>对工具进行测试</h2><p>是否运行了正确的编译器？燃料油表是否被黏住了？量表是不是没电了？</p>
+<hr>
+<h1 id="获得全新观点"><a href="#获得全新观点" class="headerlink" title="获得全新观点"></a>获得全新观点</h1><p>不管怎样，你都要休息一下，喝杯咖啡。</p>
+<h2 id="征求别人意见"><a href="#征求别人意见" class="headerlink" title="征求别人意见"></a>征求别人意见</h2><p>甚至一个不说话的人体模特也能帮助你认识到你先前没有注意到的事情。</p>
+<h2 id="获取专业知识"><a href="#获取专业知识" class="headerlink" title="获取专业知识"></a>获取专业知识</h2><p>只有VGA视频采集卡的厂商才能够肯定相位功能发生了错误。</p>
+<h2 id="听取别人的经验"><a href="#听取别人的经验" class="headerlink" title="听取别人的经验"></a>听取别人的经验</h2><p>别人会告诉你车内顶灯的线被挤压出来了。</p>
+<h2 id="帮助无处不在"><a href="#帮助无处不在" class="headerlink" title="帮助无处不在"></a>帮助无处不在</h2><p>同时、供应商、网络，还有书店，都在等待着为你提供帮助。</p>
+<h2 id="放下面子"><a href="#放下面子" class="headerlink" title="放下面子"></a>放下面子</h2><p>Bug发生了。以除掉bug为自豪，而不要非得以自己除掉bug才为自豪。</p>
+<h2 id="报告症状，而不要讲你的理论"><a href="#报告症状，而不要讲你的理论" class="headerlink" title="报告症状，而不要讲你的理论"></a>报告症状，而不要讲你的理论</h2><p>不要把别人拖进你的思维定式中。</p>
+<h2 id="你提出十分肯定"><a href="#你提出十分肯定" class="headerlink" title="你提出十分肯定"></a>你提出十分肯定</h2><p>甚至连“穿了格子衬衫”这样的事情也可以提出来。</p>
+<hr>
+<h1 id="如果你不修复bug，它将依然存在"><a href="#如果你不修复bug，它将依然存在" class="headerlink" title="如果你不修复bug，它将依然存在"></a>如果你不修复bug，它将依然存在</h1><p>如果你已经掌握了所有的技术，没有理由再让bug存在了。</p>
+<h2 id="查证问题确实已被修复"><a href="#查证问题确实已被修复" class="headerlink" title="查证问题确实已被修复"></a>查证问题确实已被修复</h2><p>不要假设是电路的问题，而仍然让汽车带着脏的滤油嘴上路。</p>
+<h2 id="查证确实是你的修复措施解决了问题"><a href="#查证确实是你的修复措施解决了问题" class="headerlink" title="查证确实是你的修复措施解决了问题"></a>查证确实是你的修复措施解决了问题</h2><p>口中大喊“Wubba！”并不是让计算机打开的窍门。</p>
+<h2 id="要知道，bug从来不会自己消失"><a href="#要知道，bug从来不会自己消失" class="headerlink" title="要知道，bug从来不会自己消失"></a>要知道，bug从来不会自己消失</h2><p>使用最初导致它失败的方法再次制造失败。如果必须交付产品，那么就在产品中设计一个用于捕捉bug的“陷阱”，以便产品在客户现场发生失败时，把它捉住。</p>
+<h2 id="从根本上解决问题"><a href="#从根本上解决问题" class="headerlink" title="从根本上解决问题"></a>从根本上解决问题</h2><p>在烧坏另一台变压器之前，先把无用的8音轨磁带卡座扔掉。</p>
+<h2 id="对过程进行修复"><a href="#对过程进行修复" class="headerlink" title="对过程进行修复"></a>对过程进行修复</h2><p>不要只是擦掉地上的油，而要纠正设计机器的方式。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/方法论/" rel="tag"><i class="fa fa-tag"></i> 方法论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/24/Expectation-Maximization/" rel="next" title="Expectation Maximization">
+                <i class="fa fa-chevron-left"></i> Expectation Maximization
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="DaXu">
+            
+              <p class="site-author-name" itemprop="name">DaXu</p>
+              <p class="site-description motion-element" itemprop="description">少即是多，慢即是快</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/liouliooo" title="GitHub &rarr; https://github.com/liouliooo" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#理解系统"><span class="nav-number">1.</span> <span class="nav-text">理解系统</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#阅读手册"><span class="nav-number">1.1.</span> <span class="nav-text">阅读手册</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#仔细阅读每个细节"><span class="nav-number">1.2.</span> <span class="nav-text">仔细阅读每个细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#掌握基本知识"><span class="nav-number">1.3.</span> <span class="nav-text">掌握基本知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解工作流程"><span class="nav-number">1.4.</span> <span class="nav-text">了解工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#了解工具"><span class="nav-number">1.5.</span> <span class="nav-text">了解工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查阅细节"><span class="nav-number">1.6.</span> <span class="nav-text">查阅细节</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#制造失败"><span class="nav-number">2.</span> <span class="nav-text">制造失败</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#制造失败-1"><span class="nav-number">2.1.</span> <span class="nav-text">制造失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从头开始"><span class="nav-number">2.2.</span> <span class="nav-text">从头开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引发失败"><span class="nav-number">2.3.</span> <span class="nav-text">引发失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#但不要模拟失败"><span class="nav-number">2.4.</span> <span class="nav-text">但不要模拟失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查找不受你控制的条件（正是它导致了间歇性失败）"><span class="nav-number">2.5.</span> <span class="nav-text">查找不受你控制的条件（正是它导致了间歇性失败）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#记录每件事情，并找到间隙性bug的特征"><span class="nav-number">2.6.</span> <span class="nav-text">记录每件事情，并找到间隙性bug的特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要过于相信统计数据"><span class="nav-number">2.7.</span> <span class="nav-text">不要过于相信统计数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要认识到“那”是可能发生的"><span class="nav-number">2.8.</span> <span class="nav-text">要认识到“那”是可能发生的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#永远不要丢掉一个调试工具"><span class="nav-number">2.9.</span> <span class="nav-text">永远不要丢掉一个调试工具</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#不要想，而要看"><span class="nav-number">3.</span> <span class="nav-text">不要想，而要看</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#观察失败"><span class="nav-number">3.1.</span> <span class="nav-text">观察失败</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查看细节"><span class="nav-number">3.2.</span> <span class="nav-text">查看细节</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#植入插装工具"><span class="nav-number">3.3.</span> <span class="nav-text">植入插装工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#添加外部插装工具"><span class="nav-number">3.4.</span> <span class="nav-text">添加外部插装工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不要害怕深入研究"><span class="nav-number">3.5.</span> <span class="nav-text">不要害怕深入研究</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注意海森堡效应"><span class="nav-number">3.6.</span> <span class="nav-text">注意海森堡效应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#猜测只是为了确定搜索的重点"><span class="nav-number">3.7.</span> <span class="nav-text">猜测只是为了确定搜索的重点</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#分而治之（调试的核心）"><span class="nav-number">4.</span> <span class="nav-text">分而治之（调试的核心）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过逐次逼近搜索范围"><span class="nav-number">4.1.</span> <span class="nav-text">通过逐次逼近搜索范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定范围"><span class="nav-number">4.2.</span> <span class="nav-text">确定范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定你位于bug的哪一侧"><span class="nav-number">4.3.</span> <span class="nav-text">确定你位于bug的哪一侧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用易于查看的测试模式"><span class="nav-number">4.4.</span> <span class="nav-text">使用易于查看的测试模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从有问题的一端开始搜索"><span class="nav-number">4.5.</span> <span class="nav-text">从有问题的一端开始搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#修复已知bug。Bug互相保护，互相隐藏"><span class="nav-number">4.6.</span> <span class="nav-text">修复已知bug。Bug互相保护，互相隐藏</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首先消除噪声干扰"><span class="nav-number">4.7.</span> <span class="nav-text">首先消除噪声干扰</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一次只改一个地方"><span class="nav-number">5.</span> <span class="nav-text">一次只改一个地方</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#隔离关键因素"><span class="nav-number">5.1.</span> <span class="nav-text">隔离关键因素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用双手抓住黄铜杆"><span class="nav-number">5.2.</span> <span class="nav-text">用双手抓住黄铜杆</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一次只改一个测试"><span class="nav-number">5.3.</span> <span class="nav-text">一次只改一个测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与正常情况进行比较"><span class="nav-number">5.4.</span> <span class="nav-text">与正常情况进行比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#确定自从上一次正常工作以来你改变了什么地方"><span class="nav-number">5.5.</span> <span class="nav-text">确定自从上一次正常工作以来你改变了什么地方</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#保持审计跟踪"><span class="nav-number">6.</span> <span class="nav-text">保持审计跟踪</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#把你的操作、操作顺序和结果全部记录下来"><span class="nav-number">6.1.</span> <span class="nav-text">把你的操作、操作顺序和结果全部记录下来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要知道，任何细节都可能是重要的"><span class="nav-number">6.2.</span> <span class="nav-text">要知道，任何细节都可能是重要的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把事件关联到一起"><span class="nav-number">6.3.</span> <span class="nav-text">把事件关联到一起</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用有设计的审计跟踪在测试中也非常有用"><span class="nav-number">6.4.</span> <span class="nav-text">用有设计的审计跟踪在测试中也非常有用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#把事情记录下来！"><span class="nav-number">6.5.</span> <span class="nav-text">把事情记录下来！</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查插头"><span class="nav-number">7.</span> <span class="nav-text">检查插头</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#置疑你的假设"><span class="nav-number">7.1.</span> <span class="nav-text">置疑你的假设</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从头开始-1"><span class="nav-number">7.2.</span> <span class="nav-text">从头开始</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对工具进行测试"><span class="nav-number">7.3.</span> <span class="nav-text">对工具进行测试</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#获得全新观点"><span class="nav-number">8.</span> <span class="nav-text">获得全新观点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#征求别人意见"><span class="nav-number">8.1.</span> <span class="nav-text">征求别人意见</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取专业知识"><span class="nav-number">8.2.</span> <span class="nav-text">获取专业知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#听取别人的经验"><span class="nav-number">8.3.</span> <span class="nav-text">听取别人的经验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#帮助无处不在"><span class="nav-number">8.4.</span> <span class="nav-text">帮助无处不在</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#放下面子"><span class="nav-number">8.5.</span> <span class="nav-text">放下面子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#报告症状，而不要讲你的理论"><span class="nav-number">8.6.</span> <span class="nav-text">报告症状，而不要讲你的理论</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#你提出十分肯定"><span class="nav-number">8.7.</span> <span class="nav-text">你提出十分肯定</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如果你不修复bug，它将依然存在"><span class="nav-number">9.</span> <span class="nav-text">如果你不修复bug，它将依然存在</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#查证问题确实已被修复"><span class="nav-number">9.1.</span> <span class="nav-text">查证问题确实已被修复</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#查证确实是你的修复措施解决了问题"><span class="nav-number">9.2.</span> <span class="nav-text">查证确实是你的修复措施解决了问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#要知道，bug从来不会自己消失"><span class="nav-number">9.3.</span> <span class="nav-text">要知道，bug从来不会自己消失</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从根本上解决问题"><span class="nav-number">9.4.</span> <span class="nav-text">从根本上解决问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对过程进行修复"><span class="nav-number">9.5.</span> <span class="nav-text">对过程进行修复</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DaXu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">坚持，专注</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
