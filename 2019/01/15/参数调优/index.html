@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.5.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.5.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.5.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.5.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '6.5.0',
+    sidebar: {"position":"left","width":240,"display":"post","offset":8,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概述 选取一个方向  **数据** **算法** **调参** **模型集成**    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  **从上往下，效果提升越来越小**     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 N">
+<meta name="keywords" content="方法论">
+<meta property="og:type" content="article">
+<meta property="og:title" content="参数调优">
+<meta property="og:url" content="https://Liouliooo.github.io/2019/01/15/参数调优/index.html">
+<meta property="og:site_name" content="大絮">
+<meta property="og:description" content="概述 选取一个方向  **数据** **算法** **调参** **模型集成**    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  **从上往下，效果提升越来越小**     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 N">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-11-11T14:53:33.777Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="参数调优">
+<meta name="twitter:description" content="概述 选取一个方向  **数据** **算法** **调参** **模型集成**    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  **从上往下，效果提升越来越小**     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 N">
+
+
+
+
+
+
+  <link rel="canonical" href="https://Liouliooo.github.io/2019/01/15/参数调优/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>参数调优 | 大絮</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大絮</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+            
+
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2019/01/15/参数调优/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="DaXu">
+      <meta itemprop="description" content="少即是多，慢即是快">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大絮">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">参数调优
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-01-15 22:52:30" itemprop="dateCreated datePublished" datetime="2019-01-15T22:52:30+08:00">2019-01-15</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-11-11 22:53:33" itemprop="dateModified" datetime="2019-11-11T22:53:33+08:00">2019-11-11</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
+<li><p>选取一个方向</p>
+<ul>
+<li><font color="#ff0000" size="3">**数据**</font></li>
+<li><font color="#ff0000" size="3">**算法**</font></li>
+<li><font color="#ff0000" size="3">**调参**</font></li>
+<li><font color="#ff0000" size="3">**模型集成**</font>
+</li>
+</ul>
+</li>
+<li><p>在某一个方向里选取一种方法</p>
+</li>
+<li><p>在选取的方法中选取一件事情去尝试</p>
+</li>
+<li><p>比较结果，如果性能有提升，则保留</p>
+</li>
+<li><p>不断重复</p>
+</li>
+<li><font color="#ff0000" size="3">**从上往下，效果提升越来越小**</font>
+
+
+</li>
+</ul>
+<p>原文网址：<a href="https://machinelearningmastery.com/improve-deep-learning-performance/" target="_blank" rel="noopener">How To Improve Deep Learning Performance</a></p>
+<p>中文翻译：<a href="https://blog.csdn.net/han_xiaoyang/article/details/52654879" target="_blank" rel="noopener">如何提高深度学习（和机器学习）的性能</a></p>
+<h4 id="可参考资源"><a href="#可参考资源" class="headerlink" title="可参考资源"></a>可参考资源</h4><ul>
+<li><p><a href="ftp://ftp.sas.com/pub/neural/FAQ.html" target="_blank" rel="noopener">Neural Network FAQ</a></p>
+</li>
+<li><p><a href="https://machinelearningmastery.com/grid-search-hyperparameters-deep-learning-models-python-keras/" target="_blank" rel="noopener">How to Grid Search Hyperparameters for Deep Learning Models in Python With Keras</a></p>
+</li>
+<li><p><a href="http://lamda.nju.edu.cn/weixs/project/CNNTricks/CNNTricks.html" target="_blank" rel="noopener">Must Know Tips/Tricks in Deep Neural Networks</a></p>
+</li>
+<li><p><a href="https://stackoverflow.com/questions/37020754/how-to-increase-validation-accuracy-with-deep-neural-net" target="_blank" rel="noopener">How to increase validation accuracy with deep neural net?</a></p>
+</li>
+</ul>
+<hr>
+<h1 id="参数调优"><a href="#参数调优" class="headerlink" title="参数调优"></a>参数调优</h1><h2 id="1-通过数据提升性能"><a href="#1-通过数据提升性能" class="headerlink" title="1. 通过数据提升性能"></a>1. 通过数据提升性能</h2><p>(1) 获取更多的数据</p>
+<ul>
+<li>获得最好的数据</li>
+</ul>
+<p><a href="https://www.edge.org/response-detail/26587" target="_blank" rel="noopener">Datasets Over Algorithms</a></p>
+<p>(2) 创造更多的数据</p>
+<ul>
+<li><p>如果你的数据是数值型向量，可以随机构造已有向量的修改版本</p>
+</li>
+<li><p>如果你的数据是图片，可以随机构造已有图片的修改版本(平移、截取、旋转等)</p>
+</li>
+<li><p>如果你的数据是文本，类似的操作……</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/image-augmentation-deep-learning-keras/" target="_blank" rel="noopener">Image Augmentation for Deep Learning With Keras</a></p>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_jitter" target="_blank" rel="noopener">What is jitter? (Training with noise)</a></p>
+<p>(3) 重放缩你的数据</p>
+<ul>
+<li><p>归一化到0和1的区间</p>
+</li>
+<li><p>重放缩到－1和1的区间</p>
+</li>
+<li><p>标准化（标准化数据使之成为零均值，单位标准差）</p>
+</li>
+</ul>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ2.html#A_std" target="_blank" rel="noopener">Should I standardize the input variables (column vectors)?</a></p>
+<p><a href="https://machinelearningmastery.com/prepare-data-machine-learning-python-scikit-learn/" target="_blank" rel="noopener">How To Prepare Your Data For Machine Learning in Python with Scikit-Learn</a></p>
+<p>(4) 转化你的数据</p>
+<p><strong>猜测每一列数据的单变量分布：</strong></p>
+<ul>
+<li><p>列数据看起来像偏斜的高斯分布吗？考虑用Box-Cox变换调整偏态</p>
+</li>
+<li><p>列数据看起来像指数分布吗？考虑用对数变换</p>
+</li>
+<li><p>列数据看起来有一些特征，但是它们被一些明显的东西遮盖了，尝试取平方或者开平方根来转换数据</p>
+</li>
+<li><p>你能离散化一个特征或者以某种方式组合特征，来更好地突出一些特征吗？</p>
+</li>
+</ul>
+<p><strong>依靠你的直觉，尝试以下方法：</strong></p>
+<ul>
+<li><p>你能利用类似PCA的投影方法来预处理数据吗？</p>
+</li>
+<li><p>你能综合多维特征至一个单一数值(特征)吗？</p>
+</li>
+<li><p>你能用一个新的布尔标签去发现问题中存在一些有趣的方面吗？</p>
+</li>
+<li><p>你能用其他方法探索出目前场景下的其他特殊结构吗？</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/how-to-define-your-machine-learning-problem/" target="_blank" rel="noopener">How to Define Your Machine Learning Problem</a></p>
+<p><a href="https://machinelearningmastery.com/discover-feature-engineering-how-to-engineer-features-and-how-to-get-good-at-it/" target="_blank" rel="noopener">Discover Feature Engineering, How to Engineer Features and How to Get Good at It</a></p>
+<p><a href="https://machinelearningmastery.com/prepare-data-machine-learning-python-scikit-learn/" target="_blank" rel="noopener">How To Prepare Your Data For Machine Learning in Python with Scikit-Learn</a></p>
+<p>(5) 特征选取</p>
+<ul>
+<li><p>或许你利用更少的特征就能达到同等甚至更好的性能。而且，这将使模型变得更快！</p>
+</li>
+<li><p>或许所有的特征选择方法都剔除了同样的特征子集。很好，这些方法在没用的特征上达成了一致</p>
+</li>
+<li><p>或许筛选过后的特征子集，能带给特征工程的新思路</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/an-introduction-to-feature-selection/" target="_blank" rel="noopener">An Introduction to Feature Selection</a></p>
+<p><a href="https://machinelearningmastery.com/feature-selection-machine-learning-python/" target="_blank" rel="noopener">Feature Selection For Machine Learning in Python</a></p>
+<p>(6) 重架构你的问题</p>
+<ul>
+<li><p>看看能够在一个时间窗（时间周期）内对已有的特征/数据做一个合并</p>
+</li>
+<li><p>或许你的分类问题可以成为一个回归问题(有时候是回归到分类)</p>
+</li>
+<li><p>或许你的二元输出可以变成softmax输出</p>
+</li>
+<li><p>或许你可以转而对子问题进行建模</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/how-to-define-your-machine-learning-problem/" target="_blank" rel="noopener">How to Define Your Machine Learning Problem</a></p>
+<h2 id="2-通过算法提升性能"><a href="#2-通过算法提升性能" class="headerlink" title="2. 通过算法提升性能"></a>2. 通过算法提升性能</h2><p>(1) 对算法进行抽样调查</p>
+<p><strong>原则：Maybe your chosen algorithms is not the best for your problem</strong></p>
+<p><a href="https://en.wikipedia.org/wiki/No_free_lunch_theorem" target="_blank" rel="noopener"><strong>no free lunch theorem</strong></a></p>
+<ul>
+<li><p>首先尝试评估一些线性方法，例如逻辑回归（logistic regression）和线性判别分析（linear discriminate analysis）</p>
+</li>
+<li><p>评估一些树类模型，例如CART， 随机森林（Random Forest）和Gradient Boosting</p>
+</li>
+<li><p>评估一些实例方法，例如支持向量机（SVM）和K-近邻（KNN）</p>
+</li>
+<li><p>评估一些其他的神经网络方法，例如LVQ, MLP, CNN, LSTM, hybrids等</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/a-data-driven-approach-to-machine-learning/" target="_blank" rel="noopener">A Data-Driven Approach to Machine Learning</a></p>
+<p><a href="https://machinelearningmastery.com/why-you-should-be-spot-checking-algorithms-on-your-machine-learning-problems/" target="_blank" rel="noopener">Why you should be Spot-Checking Algorithms on your Machine Learning Problems</a></p>
+<p><a href="https://machinelearningmastery.com/spot-check-classification-machine-learning-algorithms-python-scikit-learn/" target="_blank" rel="noopener">Spot-Check Classification Machine Learning Algorithms in Python with scikit-learn</a></p>
+<p>(2) 借鉴已有文献</p>
+<p><a href="https://machinelearningmastery.com/how-to-research-a-machine-learning-algorithm/" target="_blank" rel="noopener">How to Research a Machine Learning Algorithm</a></p>
+<p><a href="http://scholar.google.com/" target="_blank" rel="noopener">Google Scholar</a></p>
+<p>(3) 重采样方法</p>
+<p><strong>深度学习模型在训练阶段非常缓慢，无法用一些常用的方法，例如k层交叉验证，去估计模型的性能：</strong></p>
+<ul>
+<li><p>或许你在使用一个简单的训练集／测试集分割（保持训练集和测试集分布一致，符合<font color="#ff0000" size="3">层化原则(stratification)</font>），这是常规套路。如果是这样，你需要确保这种分割针对你的问题具有代表性。单变量统计和可视化是一个好的开始</p>
+</li>
+<li><p>或许你能利用硬件来加速估计的过程。例如，如果你有集群或者AWS云端服务（Amazon Web Services）账号，你可以并行地训练n个模型，然后获取结果的均值和标准差来得到更鲁棒的估计</p>
+</li>
+<li><p>或许你可以利用hold-out验证方法来了解模型在训练后的性能（这在早停法early stopping中很有用，后面会讲到）</p>
+</li>
+<li><p>或许你可以先隐藏一个完全没用过的验证集，等到你已经完成模型选择之后再使用它</p>
+</li>
+</ul>
+<p><strong>让数据集变得更小，以及使用更强的重采样方法：</strong></p>
+<ul>
+<li><p>有些情况下你会发现在训练集的一部分样本上训练得到的模型的性能，和在整个数据集上训练得到的模型的性能有很强的相关性。也许你可以<font color="#ff0000" size="3">先在小数据集上完成模型选择和参数调优，然后再将最终的方法扩展到全部数据集上</font></p>
+</li>
+<li><p>或许你可以用某些方式限制数据集，只取一部分样本，然后用它进行全部的建模过程<font color="#ff0000" size="3">（如何对数据进行采样，使用采集的样本作为全部训练集）</font></p>
+</li>
+<li><p>先创造一些和原始数据很相似的数据（包括特征空间和数据分布，创造的数据应力求简单，并和原始数据任务相同），然后用创造的数据先训练一个基本模型，然后将得到的模型应用到原始数据</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/evaluate-performance-deep-learning-models-keras/" target="_blank" rel="noopener">Evaluate the Performance Of Deep Learning Models in Keras</a></p>
+<p><a href="https://machinelearningmastery.com/evaluate-performance-machine-learning-algorithms-python-using-resampling/" target="_blank" rel="noopener">Evaluate the Performance of Machine Learning Algorithms in Python using Resampling</a></p>
+<h2 id="3-通过算法调参提升性能"><a href="#3-通过算法调参提升性能" class="headerlink" title="3. 通过算法调参提升性能"></a>3. 通过算法调参提升性能</h2><p><strong>关于超参数优化请参阅博文：</strong></p>
+<p><a href="https://machinelearningmastery.com/grid-search-hyperparameters-deep-learning-models-python-keras/" target="_blank" rel="noopener">How to Grid Search Hyperparameters for Deep Learning Models in Python With Keras</a></p>
+<p>(1) 诊断（Diagnostics）</p>
+<font color="#ff0000" size="3">**你的模型是过拟合还是欠拟合？永远牢记这个问题。永远！**</font>
+
+<p><strong>模型总是会遇到过拟合或者欠拟合，只是程度不同罢了。一个快速了解模型学习行为的方法是，在每个周期，评估模型在训练集和验证集上的表现：</strong></p>
+<ul>
+<li><p>如果训练集上的模型总是优于验证集上的模型，你可能遇到了过拟合，你可以使用诸如正则化的方法</p>
+</li>
+<li><p>如果训练集和验证集上的模型都很差，你可能遇到了欠拟合，你可以提升网络的容量，以及训练更多或者更久</p>
+</li>
+<li><p>如果有一个拐点存在，在那之后训练集上的模型开始优于验证集上的模型，你可能需要使用早停法</p>
+</li>
+</ul>
+<p><strong>另一个有用的诊断是网络模型判定对和判定错的观察值：</strong></p>
+<ul>
+<li><p>对于难以训练的样本，或许你需要更多的数据</p>
+</li>
+<li><p>或许你应该剔除训练集中易于建模的多余的样本</p>
+</li>
+<li><p>也许可以尝试对训练集划分不同的区域，在特定区域中用更专长的模型</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/display-deep-learning-model-training-history-in-keras/" target="_blank" rel="noopener">Display Deep Learning Model Training History in Keras</a></p>
+<p><a href="https://machinelearningmastery.com/overfitting-and-underfitting-with-machine-learning-algorithms/" target="_blank" rel="noopener">Overfitting and Underfitting With Machine Learning Algorithms</a></p>
+<p>(2) 权重初始化（Weight Initialization）</p>
+<p><strong>经验法则通常是：用小的随机数进行初始化</strong></p>
+<ul>
+<li><p>尝试所有不同的初始化方法，考察是否有一种方法在其他情况不变的情况下(效果)更优</p>
+</li>
+<li><p>尝试用无监督的方法，例如自动编码（autoencoder），来进行预先学习</p>
+</li>
+<li><p>尝试使用一个已经存在的模型，只是针对你的问题重新训练输入层和输出层（迁移学习transfer learning）</p>
+</li>
+</ul>
+<p><strong>注意一点：改变权重初始化方法和激活函数，甚至优化函数/损失函数紧密相关</strong></p>
+<p><a href="http://deepdish.io/2015/02/24/network-initialization/" target="_blank" rel="noopener">Initialization of deep networks</a></p>
+<p>(3) 学习速率（Learning Rate）</p>
+<ul>
+<li><p>实验很大和很小的学习率</p>
+</li>
+<li><p>格点搜索文献里常见的学习速率值，考察你能学习多深的网络</p>
+</li>
+<li><p>尝试随周期递减的学习率</p>
+</li>
+<li><p>尝试经过固定周期数后按比例减小的学习率</p>
+</li>
+<li><p>尝试增加一个动量项（momentum term），然后对学习速率和动量同时进行格点搜索</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/using-learning-rate-schedules-deep-learning-models-python-keras/" target="_blank" rel="noopener">Using Learning Rate Schedules for Deep Learning Models in Python with Keras</a></p>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ2.html#A_learn_rate" target="_blank" rel="noopener">What learning rate should be used for backprop?</a></p>
+<p>(4) 激活函数</p>
+<ul>
+<li>尝试全部三种激活函数（ReLU，Sigmoid，Tanh等），并且重缩放你的数据以满足激活函数的边界：</li>
+</ul>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ2.html#A_act" target="_blank" rel="noopener">Why use activation functions?</a></p>
+<p>(5) 网络拓扑（Network Topology）</p>
+<ul>
+<li><p>尝试一个隐藏层和许多神经元（广度模型）</p>
+</li>
+<li><p>尝试一个深的网络，但是每层只有很少的神经元（深度模型）</p>
+</li>
+<li><p>尝试上述两种方法的组合</p>
+</li>
+<li><p>借鉴研究问题与你的类似的论文里面的结构</p>
+</li>
+<li><p>尝试拓扑模式（扇出fan out然后扇入fan in）和书籍论文里的经验法则</p>
+</li>
+</ul>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_hl" target="_blank" rel="noopener">How many hidden layers should I use?</a></p>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_hu" target="_blank" rel="noopener">How many hidden units should I use?</a></p>
+<p>(6) 批次和周期（Batches and Epochs）</p>
+<ul>
+<li><p>尝试选取与训练数据同大小的batch size，但注意一下内存（批次学习batch learning）</p>
+</li>
+<li><p>尝试选取1作为batch size（在线学习online learning）</p>
+</li>
+<li><p>尝试用格点搜索不同的小的batch size（4，8，16，32，…）</p>
+</li>
+<li><p>分别尝试训练少量周期和大量周期</p>
+</li>
+</ul>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ2.html#A_styles" target="_blank" rel="noopener">What are batch, incremental, on-line … learning?</a></p>
+<p><a href="https://www.quora.com/Intuitively-how-does-mini-batch-size-affect-the-performance-of-stochastic-gradient-descent" target="_blank" rel="noopener">Intuitively, how does mini-batch size affect the performance of (stochastic) gradient descent?</a></p>
+<p>(7) 正则化</p>
+<p><strong>可以从dropout方法开始：</strong></p>
+<ul>
+<li><p>格点搜索不同的丢失比例</p>
+</li>
+<li><p>分别在输入，隐藏层和输出层中试验 dropout 方法</p>
+</li>
+<li><p>dropout方法也有一些拓展，比如你也可以尝试<br><a href="http://cs.nyu.edu/~wanli/dropc/" target="_blank" rel="noopener">drop connect</a> 方法</p>
+</li>
+</ul>
+<p><strong>可以尝试其他更传统的神经网络正则化方法：</strong></p>
+<ul>
+<li><p>权重衰减（Weight decay）去惩罚大的权重</p>
+</li>
+<li><p>激活约束（Activation constraint）去惩罚大的激活值</p>
+</li>
+</ul>
+<p><a href="https://machinelearningmastery.com/dropout-regularization-deep-learning-models-keras/" target="_blank" rel="noopener">Dropout Regularization in Deep Learning Models With Keras</a></p>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_decay" target="_blank" rel="noopener">What is Weight Decay?</a></p>
+<font color="#ff0000" size="3">**(8) 优化和损失**
+</font>
+
+<p><a href="http://sebastianruder.com/optimizing-gradient-descent/" target="_blank" rel="noopener"><font color="#ff0000" size="3"><strong>An overview of gradient descent optimization algorithms</strong></font></a></p>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ2.html#A_numanal" target="_blank" rel="noopener">What are conjugate gradients, Levenberg-Marquardt, etc.?</a></p>
+<p><a href="http://ai.stanford.edu/~ang/papers/icml11-OptimizationForDeepLearning.pdf" target="_blank" rel="noopener">On Optimization Methods for Deep Learning, 2011 PDF</a></p>
+<p>(9) 早停法</p>
+<p><a href="https://machinelearningmastery.com/check-point-deep-learning-models-keras/" target="_blank" rel="noopener">How to Check-Point Deep Learning Models in Keras</a></p>
+<p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_stop" target="_blank" rel="noopener">What is early stopping?</a></p>
+<h2 id="4-通过模型集成提升性能"><a href="#4-通过模型集成提升性能" class="headerlink" title="4.通过模型集成提升性能"></a>4.通过模型集成提升性能</h2><p>(1) 组合模型</p>
+<p><a href="https://machinelearningmastery.com/ensemble-machine-learning-algorithms-python-scikit-learn/" target="_blank" rel="noopener">Ensemble Machine Learning Algorithms in Python with scikit-learn</a></p>
+<p><a href="https://machinelearningmastery.com/how-to-improve-machine-learning-results/" target="_blank" rel="noopener">How to Improve Machine Learning Results</a></p>
+<p>(2) 组合视角</p>
+<p>(3) 堆叠（Stacking）</p>
+<p><a href="http://machine-learning.martinsewell.com/ensembles/stacking/" target="_blank" rel="noopener">Stacked Generalization (Stacking)</a></p>
+<hr>
+<p>（以下是自己总结，以后有新的感悟还要修改2019.03.10）</p>
+<h3 id="有关神经网络几点："><a href="#有关神经网络几点：" class="headerlink" title="有关神经网络几点："></a>有关神经网络几点：</h3><p>(1) 神经网络结构</p>
+<ul>
+<li><p>第一，神经网络理论上可以映射任何关系，表达能力超强 <a href="https://en.wikipedia.org/wiki/Universal_approximation_theorem" target="_blank" rel="noopener">universal function approximation</a></p>
+</li>
+<li><p>第二，对于自己的数据，要根据实际情况选择一个合适的网络结构</p>
+</li>
+<li><p>第三，对不同结构神经网络，使用之前要有一个预期的效果</p>
+</li>
+</ul>
+<p>(2) 神经网络最常见的三个问题</p>
+<ul>
+<li><p>梯度弥散：<font color="#ff0000" size="3">梯度可视化</font>查看梯度变化情况（可以从AutoEncoder，ResNet和Inception等角度考虑）</p>
+</li>
+<li><p>局部极小值：<font color="#ff0000" size="3">权重初始化</font>和<font color="#ff0000" size="3">优化算法</font>角度解决</p>
+</li>
+<li><p>过拟合（或欠拟合）：参考上述3</p>
+</li>
+</ul>
+<p>(3) 参数调整</p>
+<p>第一，首先要知道是<font color="#ff0000" size="3"><strong>过拟合还是欠拟合</strong></font></p>
+<p>第二，参考上述3</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/方法论/" rel="tag"><i class="fa fa-tag"></i> 方法论</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/11/调试九法/" rel="next" title="调试九法">
+                <i class="fa fa-chevron-left"></i> 调试九法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.png" alt="DaXu">
+            
+              <p class="site-author-name" itemprop="name">DaXu</p>
+              <p class="site-description motion-element" itemprop="description">少即是多，慢即是快</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">1</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/liouliooo" title="GitHub &rarr; https://github.com/liouliooo" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可参考资源"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">可参考资源</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#参数调优"><span class="nav-number">2.</span> <span class="nav-text">参数调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-通过数据提升性能"><span class="nav-number">2.1.</span> <span class="nav-text">1. 通过数据提升性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-通过算法提升性能"><span class="nav-number">2.2.</span> <span class="nav-text">2. 通过算法提升性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-通过算法调参提升性能"><span class="nav-number">2.3.</span> <span class="nav-text">3. 通过算法调参提升性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-通过模型集成提升性能"><span class="nav-number">2.4.</span> <span class="nav-text">4.通过模型集成提升性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有关神经网络几点："><span class="nav-number">2.4.1.</span> <span class="nav-text">有关神经网络几点：</span></a></li></ol></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">DaXu</span>
+
+  
+
+  
+</div>
+
+
+  <div class="powered-by">坚持，专注</div>
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.5.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=6.5.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=6.5.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.5.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.5.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.5.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      },
+      TeX: {equationNumbers: { autoNumber: "AMS" }}
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+<script type="text/javascript" src="//cdn.jsdelivr.net/npm/mathjax@2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    
+  
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
