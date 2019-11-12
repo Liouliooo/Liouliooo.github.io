@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="概述 选取一个方向  **数据** **算法** **调参** **模型集成**    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  **从上往下，效果提升越来越小**     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 N">
+  <meta name="description" content="概述 选取一个方向  数据 算法 调参 模型集成    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  从上往下，效果提升越来越小     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 Neural Network FAQ  H">
 <meta name="keywords" content="方法论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="参数调优">
-<meta property="og:url" content="https://Liouliooo.github.io/2019/01/15/参数调优/index.html">
+<meta property="og:title" content="调参">
+<meta property="og:url" content="https://Liouliooo.github.io/2019/01/12/调参/index.html">
 <meta property="og:site_name" content="大絮">
-<meta property="og:description" content="概述 选取一个方向  **数据** **算法** **调参** **模型集成**    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  **从上往下，效果提升越来越小**     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 N">
+<meta property="og:description" content="概述 选取一个方向  数据 算法 调参 模型集成    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  从上往下，效果提升越来越小     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 Neural Network FAQ  H">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-11T14:53:33.777Z">
+<meta property="og:updated_time" content="2019-11-12T14:42:49.993Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="参数调优">
-<meta name="twitter:description" content="概述 选取一个方向  **数据** **算法** **调参** **模型集成**    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  **从上往下，效果提升越来越小**     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 N">
+<meta name="twitter:title" content="调参">
+<meta name="twitter:description" content="概述 选取一个方向  数据 算法 调参 模型集成    在某一个方向里选取一种方法  在选取的方法中选取一件事情去尝试  比较结果，如果性能有提升，则保留  不断重复  从上往下，效果提升越来越小     原文网址：How To Improve Deep Learning Performance 中文翻译：如何提高深度学习（和机器学习）的性能 可参考资源 Neural Network FAQ  H">
 
 
 
 
 
 
-  <link rel="canonical" href="https://Liouliooo.github.io/2019/01/15/参数调优/">
+  <link rel="canonical" href="https://Liouliooo.github.io/2019/01/12/调参/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>参数调优 | 大絮</title>
+  <title>调参 | 大絮</title>
   
 
 
@@ -335,7 +335,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2019/01/15/参数调优/">
+    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2019/01/12/调参/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DaXu">
@@ -352,7 +352,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">参数调优
+          <h1 class="post-title" itemprop="name headline">调参
               
             
           </h1>
@@ -377,7 +377,7 @@
                 
               
 
-              <time title="创建时间：2019-01-15 22:52:30" itemprop="dateCreated datePublished" datetime="2019-01-15T22:52:30+08:00">2019-01-15</time>
+              <time title="创建时间：2019-01-12 22:26:04" itemprop="dateCreated datePublished" datetime="2019-01-12T22:26:04+08:00">2019-01-12</time>
             
 
             
@@ -394,7 +394,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-11-11 22:53:33" itemprop="dateModified" datetime="2019-11-11T22:53:33+08:00">2019-11-11</time>
+                <time title="修改时间：2019-11-12 22:42:49" itemprop="dateModified" datetime="2019-11-12T22:42:49+08:00">2019-11-12</time>
               
             
           </span>
@@ -430,10 +430,10 @@
         <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><ul>
 <li><p>选取一个方向</p>
 <ul>
-<li><font color="#ff0000" size="3">**数据**</font></li>
-<li><font color="#ff0000" size="3">**算法**</font></li>
-<li><font color="#ff0000" size="3">**调参**</font></li>
-<li><font color="#ff0000" size="3">**模型集成**</font>
+<li><font color="#ff0000" size="3">数据</font></li>
+<li><font color="#ff0000" size="3">算法</font></li>
+<li><font color="#ff0000" size="3">调参</font></li>
+<li><font color="#ff0000" size="3">模型集成</font>
 </li>
 </ul>
 </li>
@@ -445,14 +445,14 @@
 </li>
 <li><p>不断重复</p>
 </li>
-<li><font color="#ff0000" size="3">**从上往下，效果提升越来越小**</font>
+<li><font color="#ff0000" size="3">从上往下，效果提升越来越小</font>
 
 
 </li>
 </ul>
 <p>原文网址：<a href="https://machinelearningmastery.com/improve-deep-learning-performance/" target="_blank" rel="noopener">How To Improve Deep Learning Performance</a></p>
 <p>中文翻译：<a href="https://blog.csdn.net/han_xiaoyang/article/details/52654879" target="_blank" rel="noopener">如何提高深度学习（和机器学习）的性能</a></p>
-<h4 id="可参考资源"><a href="#可参考资源" class="headerlink" title="可参考资源"></a>可参考资源</h4><ul>
+<h2 id="可参考资源"><a href="#可参考资源" class="headerlink" title="可参考资源"></a>可参考资源</h2><ul>
 <li><p><a href="ftp://ftp.sas.com/pub/neural/FAQ.html" target="_blank" rel="noopener">Neural Network FAQ</a></p>
 </li>
 <li><p><a href="https://machinelearningmastery.com/grid-search-hyperparameters-deep-learning-models-python-keras/" target="_blank" rel="noopener">How to Grid Search Hyperparameters for Deep Learning Models in Python With Keras</a></p>
@@ -463,7 +463,7 @@
 </li>
 </ul>
 <hr>
-<h1 id="参数调优"><a href="#参数调优" class="headerlink" title="参数调优"></a>参数调优</h1><h2 id="1-通过数据提升性能"><a href="#1-通过数据提升性能" class="headerlink" title="1. 通过数据提升性能"></a>1. 通过数据提升性能</h2><p>(1) 获取更多的数据</p>
+<h1 id="参数调优"><a href="#参数调优" class="headerlink" title="参数调优"></a>参数调优</h1><h1 id="1-通过数据提升性能"><a href="#1-通过数据提升性能" class="headerlink" title="1. 通过数据提升性能"></a>1. 通过数据提升性能</h1><p>(1) 获取更多的数据</p>
 <ul>
 <li>获得最好的数据</li>
 </ul>
@@ -539,7 +539,7 @@
 </li>
 </ul>
 <p><a href="https://machinelearningmastery.com/how-to-define-your-machine-learning-problem/" target="_blank" rel="noopener">How to Define Your Machine Learning Problem</a></p>
-<h2 id="2-通过算法提升性能"><a href="#2-通过算法提升性能" class="headerlink" title="2. 通过算法提升性能"></a>2. 通过算法提升性能</h2><p>(1) 对算法进行抽样调查</p>
+<h1 id="2-通过算法提升性能"><a href="#2-通过算法提升性能" class="headerlink" title="2. 通过算法提升性能"></a>2. 通过算法提升性能</h1><p>(1) 对算法进行抽样调查</p>
 <p><strong>原则：Maybe your chosen algorithms is not the best for your problem</strong></p>
 <p><a href="https://en.wikipedia.org/wiki/No_free_lunch_theorem" target="_blank" rel="noopener"><strong>no free lunch theorem</strong></a></p>
 <ul>
@@ -581,10 +581,10 @@
 </ul>
 <p><a href="https://machinelearningmastery.com/evaluate-performance-deep-learning-models-keras/" target="_blank" rel="noopener">Evaluate the Performance Of Deep Learning Models in Keras</a></p>
 <p><a href="https://machinelearningmastery.com/evaluate-performance-machine-learning-algorithms-python-using-resampling/" target="_blank" rel="noopener">Evaluate the Performance of Machine Learning Algorithms in Python using Resampling</a></p>
-<h2 id="3-通过算法调参提升性能"><a href="#3-通过算法调参提升性能" class="headerlink" title="3. 通过算法调参提升性能"></a>3. 通过算法调参提升性能</h2><p><strong>关于超参数优化请参阅博文：</strong></p>
+<h1 id="3-通过算法调参提升性能"><a href="#3-通过算法调参提升性能" class="headerlink" title="3. 通过算法调参提升性能"></a>3. 通过算法调参提升性能</h1><p><strong>关于超参数优化请参阅博文：</strong></p>
 <p><a href="https://machinelearningmastery.com/grid-search-hyperparameters-deep-learning-models-python-keras/" target="_blank" rel="noopener">How to Grid Search Hyperparameters for Deep Learning Models in Python With Keras</a></p>
 <p>(1) 诊断（Diagnostics）</p>
-<font color="#ff0000" size="3">**你的模型是过拟合还是欠拟合？永远牢记这个问题。永远！**</font>
+<font color="#ff0000" size="3">你的模型是过拟合还是欠拟合？永远牢记这个问题。永远！</font>
 
 <p><strong>模型总是会遇到过拟合或者欠拟合，只是程度不同罢了。一个快速了解模型学习行为的方法是，在每个周期，评估模型在训练集和验证集上的表现：</strong></p>
 <ul>
@@ -685,7 +685,7 @@
 </ul>
 <p><a href="https://machinelearningmastery.com/dropout-regularization-deep-learning-models-keras/" target="_blank" rel="noopener">Dropout Regularization in Deep Learning Models With Keras</a></p>
 <p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_decay" target="_blank" rel="noopener">What is Weight Decay?</a></p>
-<font color="#ff0000" size="3">**(8) 优化和损失**
+<font color="#ff0000" size="3">(8) 优化和损失
 </font>
 
 <p><a href="http://sebastianruder.com/optimizing-gradient-descent/" target="_blank" rel="noopener"><font color="#ff0000" size="3"><strong>An overview of gradient descent optimization algorithms</strong></font></a></p>
@@ -694,35 +694,12 @@
 <p>(9) 早停法</p>
 <p><a href="https://machinelearningmastery.com/check-point-deep-learning-models-keras/" target="_blank" rel="noopener">How to Check-Point Deep Learning Models in Keras</a></p>
 <p><a href="ftp://ftp.sas.com/pub/neural/FAQ3.html#A_stop" target="_blank" rel="noopener">What is early stopping?</a></p>
-<h2 id="4-通过模型集成提升性能"><a href="#4-通过模型集成提升性能" class="headerlink" title="4.通过模型集成提升性能"></a>4.通过模型集成提升性能</h2><p>(1) 组合模型</p>
+<h1 id="4-通过模型集成提升性能"><a href="#4-通过模型集成提升性能" class="headerlink" title="4. 通过模型集成提升性能"></a>4. 通过模型集成提升性能</h1><p>(1) 组合模型</p>
 <p><a href="https://machinelearningmastery.com/ensemble-machine-learning-algorithms-python-scikit-learn/" target="_blank" rel="noopener">Ensemble Machine Learning Algorithms in Python with scikit-learn</a></p>
 <p><a href="https://machinelearningmastery.com/how-to-improve-machine-learning-results/" target="_blank" rel="noopener">How to Improve Machine Learning Results</a></p>
 <p>(2) 组合视角</p>
 <p>(3) 堆叠（Stacking）</p>
 <p><a href="http://machine-learning.martinsewell.com/ensembles/stacking/" target="_blank" rel="noopener">Stacked Generalization (Stacking)</a></p>
-<hr>
-<p>（以下是自己总结，以后有新的感悟还要修改2019.03.10）</p>
-<h3 id="有关神经网络几点："><a href="#有关神经网络几点：" class="headerlink" title="有关神经网络几点："></a>有关神经网络几点：</h3><p>(1) 神经网络结构</p>
-<ul>
-<li><p>第一，神经网络理论上可以映射任何关系，表达能力超强 <a href="https://en.wikipedia.org/wiki/Universal_approximation_theorem" target="_blank" rel="noopener">universal function approximation</a></p>
-</li>
-<li><p>第二，对于自己的数据，要根据实际情况选择一个合适的网络结构</p>
-</li>
-<li><p>第三，对不同结构神经网络，使用之前要有一个预期的效果</p>
-</li>
-</ul>
-<p>(2) 神经网络最常见的三个问题</p>
-<ul>
-<li><p>梯度弥散：<font color="#ff0000" size="3">梯度可视化</font>查看梯度变化情况（可以从AutoEncoder，ResNet和Inception等角度考虑）</p>
-</li>
-<li><p>局部极小值：<font color="#ff0000" size="3">权重初始化</font>和<font color="#ff0000" size="3">优化算法</font>角度解决</p>
-</li>
-<li><p>过拟合（或欠拟合）：参考上述3</p>
-</li>
-</ul>
-<p>(3) 参数调整</p>
-<p>第一，首先要知道是<font color="#ff0000" size="3"><strong>过拟合还是欠拟合</strong></font></p>
-<p>第二，参考上述3</p>
 
       
     </div>
@@ -927,7 +904,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#可参考资源"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">可参考资源</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#参数调优"><span class="nav-number">2.</span> <span class="nav-text">参数调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-通过数据提升性能"><span class="nav-number">2.1.</span> <span class="nav-text">1. 通过数据提升性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-通过算法提升性能"><span class="nav-number">2.2.</span> <span class="nav-text">2. 通过算法提升性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-通过算法调参提升性能"><span class="nav-number">2.3.</span> <span class="nav-text">3. 通过算法调参提升性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-通过模型集成提升性能"><span class="nav-number">2.4.</span> <span class="nav-text">4.通过模型集成提升性能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有关神经网络几点："><span class="nav-number">2.4.1.</span> <span class="nav-text">有关神经网络几点：</span></a></li></ol></li></ol></li></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-text">概述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#可参考资源"><span class="nav-text">可参考资源</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数调优"><span class="nav-text">参数调优</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-通过数据提升性能"><span class="nav-text">1. 通过数据提升性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-通过算法提升性能"><span class="nav-text">2. 通过算法提升性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-通过算法调参提升性能"><span class="nav-text">3. 通过算法调参提升性能</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-通过模型集成提升性能"><span class="nav-text">4. 通过模型集成提升性能</span></a></li></ol></div>
             
 
           </div>
