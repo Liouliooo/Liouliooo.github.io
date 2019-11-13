@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="变分推断相对熵相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。 设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下  \begin{align*} KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2.1} \\[">
+  <meta name="description" content="1. 变分推断1.1 相对熵相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。 设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下  \begin{align*} KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2">
 <meta name="keywords" content="贝叶斯学派">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Variational Inference">
 <meta property="og:url" content="https://Liouliooo.github.io/2018/11/26/Variational-Inference/index.html">
 <meta property="og:site_name" content="大絮">
-<meta property="og:description" content="变分推断相对熵相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。 设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下  \begin{align*} KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2.1} \\[">
+<meta property="og:description" content="1. 变分推断1.1 相对熵相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。 设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下  \begin{align*} KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-05-15T14:29:35.572Z">
+<meta property="og:updated_time" content="2019-11-13T14:21:55.509Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Variational Inference">
-<meta name="twitter:description" content="变分推断相对熵相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。 设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下  \begin{align*} KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2.1} \\[">
+<meta name="twitter:description" content="1. 变分推断1.1 相对熵相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。 设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下  \begin{align*} KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2">
 
 
 
@@ -394,7 +394,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-05-15 22:29:35" itemprop="dateModified" datetime="2019-05-15T22:29:35+08:00">2019-05-15</time>
+                <time title="修改时间：2019-11-13 22:21:55" itemprop="dateModified" datetime="2019-11-13T22:21:55+08:00">2019-11-13</time>
               
             
           </span>
@@ -445,15 +445,15 @@
       
 
       
-        <h1 id="变分推断"><a href="#变分推断" class="headerlink" title="变分推断"></a>变分推断</h1><h2 id="相对熵"><a href="#相对熵" class="headerlink" title="相对熵"></a>相对熵</h2><p>相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。</p>
+        <h1 id="1-变分推断"><a href="#1-变分推断" class="headerlink" title="1. 变分推断"></a>1. 变分推断</h1><h2 id="1-1-相对熵"><a href="#1-1-相对熵" class="headerlink" title="1.1 相对熵"></a>1.1 相对熵</h2><p>相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。</p>
 <p><strong>设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下</strong></p>
 <script type="math/tex; mode=display">
 \begin{align*}
 KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2.1} \\[2ex]
 KL(P||Q) = \int P(x) \log {P(x) \over Q(x)} \tag{2.2}
 \end{align*}</script><p>且 $KL(P||Q) \ge 0$。</p>
-<h2 id="Evidence-Lower-Bound"><a href="#Evidence-Lower-Bound" class="headerlink" title="Evidence Lower Bound"></a>Evidence Lower Bound</h2><hr>
-<h1 id="参数估计"><a href="#参数估计" class="headerlink" title="参数估计"></a>参数估计</h1><h2 id="平均场"><a href="#平均场" class="headerlink" title="平均场"></a>平均场</h2>
+<h2 id="1-2-Evidence-Lower-Bound"><a href="#1-2-Evidence-Lower-Bound" class="headerlink" title="1.2 Evidence Lower Bound"></a>1.2 Evidence Lower Bound</h2><hr>
+<h1 id="2-参数估计"><a href="#2-参数估计" class="headerlink" title="2. 参数估计"></a>2. 参数估计</h1><h2 id="2-1-平均场"><a href="#2-1-平均场" class="headerlink" title="2.1 平均场"></a>2.1 平均场</h2>
       
     </div>
 
@@ -657,7 +657,7 @@ KL(P||Q) = \int P(x) \log {P(x) \over Q(x)} \tag{2.2}
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#变分推断"><span class="nav-text">变分推断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#相对熵"><span class="nav-text">相对熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evidence-Lower-Bound"><span class="nav-text">Evidence Lower Bound</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数估计"><span class="nav-text">参数估计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#平均场"><span class="nav-text">平均场</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-变分推断"><span class="nav-text">1. 变分推断</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-相对熵"><span class="nav-text">1.1 相对熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-Evidence-Lower-Bound"><span class="nav-text">1.2 Evidence Lower Bound</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-参数估计"><span class="nav-text">2. 参数估计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-平均场"><span class="nav-text">2.1 平均场</span></a></li></ol></li></ol></div>
             
 
           </div>
