@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 1. 最大似然视角1.1 Jensen不等式Jensen读作 “延森”，Jensen不等式描述如下： 若 $f(x)$ 是区间 $(a,b)$">
-<meta name="keywords" content="贝叶斯学派,最大似然估计">
+  <meta name="description" content="数据增广这里的数据增广（Data Augmentation）针对图像数据。调参从数据、算法、超参数调整、模型集成来讲解，且效果呈递减趋势。 数据部分是重点，当图像数量不足，多样性不够等问题导致训练效果不好时，对图像数据进行数据增广。 1.图像数据扩充1.1 几何变换几何变换包括：旋转，平移，缩放，裁剪（只关注部分区域），填充（保证图像缩放的长宽比），左右翻转等。 1.2 噪声对图像像素添加噪声扰动">
+<meta name="keywords" content="方法论">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Expectation Maximization">
-<meta property="og:url" content="https://Liouliooo.github.io/2018/12/24/Expectation-Maximization/index.html">
+<meta property="og:title" content="数据增广">
+<meta property="og:url" content="https://Liouliooo.github.io/2020/02/22/数据增广/index.html">
 <meta property="og:site_name" content="大絮">
-<meta property="og:description" content="期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 1. 最大似然视角1.1 Jensen不等式Jensen读作 “延森”，Jensen不等式描述如下： 若 $f(x)$ 是区间 $(a,b)$">
+<meta property="og:description" content="数据增广这里的数据增广（Data Augmentation）针对图像数据。调参从数据、算法、超参数调整、模型集成来讲解，且效果呈递减趋势。 数据部分是重点，当图像数量不足，多样性不够等问题导致训练效果不好时，对图像数据进行数据增广。 1.图像数据扩充1.1 几何变换几何变换包括：旋转，平移，缩放，裁剪（只关注部分区域），填充（保证图像缩放的长宽比），左右翻转等。 1.2 噪声对图像像素添加噪声扰动">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-11-13T14:19:45.754Z">
+<meta property="og:updated_time" content="2020-02-22T08:32:44.876Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Expectation Maximization">
-<meta name="twitter:description" content="期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。 1. 最大似然视角1.1 Jensen不等式Jensen读作 “延森”，Jensen不等式描述如下： 若 $f(x)$ 是区间 $(a,b)$">
+<meta name="twitter:title" content="数据增广">
+<meta name="twitter:description" content="数据增广这里的数据增广（Data Augmentation）针对图像数据。调参从数据、算法、超参数调整、模型集成来讲解，且效果呈递减趋势。 数据部分是重点，当图像数量不足，多样性不够等问题导致训练效果不好时，对图像数据进行数据增广。 1.图像数据扩充1.1 几何变换几何变换包括：旋转，平移，缩放，裁剪（只关注部分区域），填充（保证图像缩放的长宽比），左右翻转等。 1.2 噪声对图像像素添加噪声扰动">
 
 
 
 
 
 
-  <link rel="canonical" href="https://Liouliooo.github.io/2018/12/24/Expectation-Maximization/">
+  <link rel="canonical" href="https://Liouliooo.github.io/2020/02/22/数据增广/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>Expectation Maximization | 大絮</title>
+  <title>数据增广 | 大絮</title>
   
 
 
@@ -335,7 +335,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2018/12/24/Expectation-Maximization/">
+    <link itemprop="mainEntityOfPage" href="https://Liouliooo.github.io/2020/02/22/数据增广/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="DaXu">
@@ -352,7 +352,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Expectation Maximization
+          <h1 class="post-title" itemprop="name headline">数据增广
               
             
           </h1>
@@ -377,46 +377,16 @@
                 
               
 
-              <time title="创建时间：2018-12-24 19:21:22" itemprop="dateCreated datePublished" datetime="2018-12-24T19:21:22+08:00">2018-12-24</time>
+              <time title="创建时间：2020-02-22 15:45:27 / 修改时间：16:32:44" itemprop="dateCreated datePublished" datetime="2020-02-22T15:45:27+08:00">2020-02-22</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-11-13 22:19:45" itemprop="dateModified" datetime="2019-11-13T22:19:45+08:00">2019-11-13</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -445,85 +415,15 @@
       
 
       
-        <p>期望最大化算法（EM）是机器学习中用来求解参数的一种迭代式方法，能收敛到局部最优，不保证全局最优。EM算法是MM算法（Minorize-Maximization algorithm）的特例之一。可以解决的典型的参数估计问题有高斯混合模型、隐马尔科夫模型等。</p>
-<h1 id="1-最大似然视角"><a href="#1-最大似然视角" class="headerlink" title="1. 最大似然视角"></a>1. 最大似然视角</h1><h2 id="1-1-Jensen不等式"><a href="#1-1-Jensen不等式" class="headerlink" title="1.1 Jensen不等式"></a>1.1 Jensen不等式</h2><p>Jensen读作 “延森”，Jensen不等式描述如下：</p>
-<p><strong>若 $f(x)$ 是区间 $(a,b)$ 上的凸函数，则对任意的 $x_1,x_2,x_3,…,x_n \in (a,b)$ ，有不等式:</strong></p>
-<script type="math/tex; mode=display">
-f({ {x_1+x_2+x_3+...+x_n} \over n}) \ge {f(x_1)+f(x_2)+f(x_3)+...+f(x_n) \over n} \tag {1.1}</script><p><strong>也可以表示为：</strong></p>
-<script type="math/tex; mode=display">
-f(E(X)) \ge E(f(X)) \tag {1.2}</script><p><strong>当且仅当 $x_1=x_2=x_3=…=x_n$ 时，等号成立。如果 $f(x)$ 为凹函数，则 $\ge$ 号取反。</strong></p>
-<h2 id="1-2-最大似然估计"><a href="#1-2-最大似然估计" class="headerlink" title="1.2 最大似然估计"></a>1.2 最大似然估计</h2><p>最大似然估计（Maximum Likelihood Estimation, MLE）属于概率论中点估计，也是机器学习中参数估计的重要方法。</p>
-<p>假设数据为 $X=(x_1,x_2,x_3,…,x_N)$，数据在某个概率模型下出现的概率为 </p>
-<script type="math/tex; mode=display">
-P(X|\theta)=p(x_1|\theta)p(x_2|\theta)p(x_3|\theta)...p(x_N|\theta) \tag {1.3}</script><p>要估计一个合适的参数 $\theta$，确保 $P(X|\theta)$ 取得最大值。因为 $p(x_i) \in [0,1]$，$P(X)$ 连乘的性质会导致其值接近无穷小，难以计算，所以在 $P(X|\theta)$ 之前加一个对数操作，把连乘转化成连加，再通过求导数求极值的方法进行参数估计。</p>
-<script type="math/tex; mode=display">
-L(X|\theta) = \log P(X|\theta) = \sum_{i}^N \log p(x_i|\theta) \tag {1.4}</script><p>期望最大化中引入了无法观测的隐变量 $Z$， $Z$ 的作用是在某种程度上影响了生成可观测数据 $X$ 的概率模型。EM算法推导如下：</p>
-<script type="math/tex; mode=display">
-\begin{eqnarray*}
-L(X|\theta) = \log P(X|\theta)  \\[2ex]
-= \sum_{i}^N \log \sum_{z}P(x_i,z_j|\theta)  \\[2ex]
-= \sum_{i}^N \log \sum_{z} Q(z_j) {P(x_i,z_j|\theta) \over Q(z_j)}  \\[2ex]
-\ge \sum_{i}^N \sum_{z} Q(z_j) \log {P(x_i,z_j|\theta) \over Q(z_j)} \tag{1.5}
-\end{eqnarray*}</script><p>其中 $(1.5)$ 是由Jensen不等式推导而来，为了使等号成立，得到一个更加紧凑的边界，假设：</p>
-<script type="math/tex; mode=display">
-{P(x_i,z_j|\theta) \over Q(z_j)} = C \tag{1.6}</script><p>推导公式得：</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-{P(x_i,z_j|\theta) \over Q(z_j)} = C  \\[2ex]
-\Rightarrow P(x_i,z_j|\theta) = C \cdot Q(z_j) \\[2ex]
-\Rightarrow \sum_{z} P(x_i,z_j|\theta) = \sum_{z} C \cdot Q(z_j) \\[2ex]
-\Rightarrow P(x_i|\theta) = C = {P(x_i,z_j|\theta) \over Q(z_j)} \\[2ex]
-\Rightarrow Q(z_j) = {P(x_i,z_j|\theta) \over P(x_i|\theta)} \\[3ex]
-Q(z_j) = P(z_j|x_i,\theta) \tag{1.7}
-\end{align*}</script><p>由此可得期望最大化的E-Step和M-Step。EM算法的迭代过程也是不断提高 $L(X|\theta)$ 函数下界的过程，直到函数收敛，但是不保证收敛到全局最优解。</p>
-<p><strong>E-Step:</strong>  <script type="math/tex">Q(z_j) = p(z_j|x_i,\theta)</script></p>
-<p><strong>M-Step:</strong>  <script type="math/tex">\theta = arg\,\max_{\theta} \sum_{i}^N \sum_{z} Q(z_j) \log {P(x_i,z_j|\theta) \over Q(z_j)}</script></p>
-<p>期望最大化算法的收敛性的证明为：</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-L(\theta^{t+1}) \ge Q_{i}^{t}(z_j) \log {p(x_i,z_j|\theta^{t+1}) \over Q_i^{t}(z_j)} \tag {1.8} \\[2ex]
-\ge Q_{i}^{t}(z_j) \log {p(x_i,z_j|\theta^{t}) \over Q_i^{t}(z_j)} \tag {1.9}
-\end{align*}</script><p>其中公式 $(1.8)$ 由Jensen不等式得证，公式 $(1.9)$ 由M步的极大值求解得证。</p>
-<p>可以把EM算法迭代求解的过程看过是坐标上升算法，E步固定 $\theta$ 求 $Q$ ，M步固定 $Q$ 求 $\theta$。</p>
-<hr>
-<h1 id="2-相对熵视角"><a href="#2-相对熵视角" class="headerlink" title="2. 相对熵视角"></a>2. 相对熵视角</h1><h2 id="2-1-相对熵"><a href="#2-1-相对熵" class="headerlink" title="2.1 相对熵"></a>2.1 相对熵</h2><p>相对熵（relative entropy），又称为Kullback-Leibler散度，用来衡量两个概率分布之间的差异程度，非对称。</p>
-<p><strong>设 $P(x)$，$Q(x)$ 是随机变量 $X$ 上的两个概率分布，则在离散和随机变量情形下，定义如下</strong></p>
-<script type="math/tex; mode=display">
-\begin{align*}
-KL(P||Q) = \sum P(x) \log {P(x) \over Q(x)} \tag{2.1} \\[2ex]
-KL(P||Q) = \int P(x) \log {P(x) \over Q(x)} \tag{2.2}
-\end{align*}</script><p>且 $KL(P||Q) \ge 0$。</p>
-<p>相对熵详细的讲解，请看<a href="https://liouliooo.com/2018/11/26/Variational-Inference/#more" target="_blank" rel="noopener">变分推断</a>。</p>
-<h2 id="2-2-变分推断"><a href="#2-2-变分推断" class="headerlink" title="2.2 变分推断"></a>2.2 变分推断</h2><p>变分推断中，依然最大化似然估计 $L(X|\theta)$。</p>
-<script type="math/tex; mode=display">
-\begin{eqnarray*}
-L(X|\theta) = \log P(X|\theta) = \log {P(X,Z|\theta) \over P(Z|X,\theta)}  \\[2ex]
-= \log P(X,Z|\theta) - \log P(Z|X,\theta) + \log Q(Z) - \log Q(Z)  \\[2ex]
-= \log P(X,Z|\theta) - \log Q(Z) - \log {P(Z|X,\theta) \over Q(Z)}  \tag{2.3}
-\end{eqnarray*}</script><p>得到 $(2.3)$ 式之后，对两边同时针对 $Q(Z)$ 取期望。</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\int_{Q(z)} \log P(X|\theta) = \int_{Q(z)} \log P(X,Z|\theta) - \int_{Q(z)} \log Q(Z) - \int_{Q(z)} \log {P(Z|X,\theta) \over Q(Z)}  \\[2ex]
-\Rightarrow \log P(X|\theta) = \int_{Q(z)} \log P(X,Z|\theta) - \int_{Q(z)} \log Q(Z) + \int_{Q(z)} \log {Q(Z) \over P(Z|X,\theta)}  \\[2ex]
-\Rightarrow \log P(X|\theta) = ELBO + KL(Q||P) \tag{2.4}
-\end{align*}</script><p>其中:</p>
-<script type="math/tex; mode=display">
-\begin{cases}
-ELBO = \int_{Q(z)} \log P(X,Z|\theta) - \int_{Q(z)} \log Q(Z) \\[3ex]
-KL(Q||P) = \int_{Q(z)} \log {Q(Z) \over P(Z|X,\theta)},
-\end{cases}</script><p>Evidence Lower Bound是 $\log P(X|\theta)$ 的下界，简称为ELBO。可以通过不断的提高下界的方式来最大化似然估计。</p>
-<p>假设：</p>
-<script type="math/tex; mode=display">
-Q(Z) = C \cdot P(Z|X,\theta) \tag{2.5}</script><p>这个假设的含义是用一个概率分布 $Q(Z)$ 来表示 $P(Z|X,\theta)$ ，当两者相等时， $KL(Q||P)$ 是一个常数。优化的目标变成了最大化ELBO。这个假设与上一节的Jensen不等式一样。（KL距离和Jensen不等式内在一定具有某种联系）</p>
-<p>则有：</p>
-<script type="math/tex; mode=display">
-\begin{align*}
-\log P(X|\theta) = ELBO + constant  \\[2ex]
-\log P(X|\theta) = \int_{Q(z)} \log P(X,Z|\theta) - \int_{Q(z)} \log Q(Z) + constant \\[2ex]
-\log P(X|\theta) = \int_z {Q(z) \log p(X,z|\theta)} - \int_{z} Q(z) \log Q(z) \\[2ex]
-\log P(X|\theta) = \int_z Q(z) { \log p(X,z|\theta) \over \log Q(z) } \\[2ex]
-= \int_{x} \int_{z} Q(z) { \log p(x,z|\theta) \over \log Q(z) } \tag{2.6}
-\end{align*}</script><p>到此，从相对熵角度的推导就和最大似然角度的推导取得相同结论。（Jensen不等式和相对熵必定具有联系，使得两者有等价性）。</p>
+        <h1 id="数据增广"><a href="#数据增广" class="headerlink" title="数据增广"></a>数据增广</h1><p>这里的数据增广（Data Augmentation）针对图像数据。<a href=""><strong>调参</strong></a>从数据、算法、超参数调整、模型集成来讲解，且效果呈递减趋势。</p>
+<p>数据部分是重点，当图像数量不足，多样性不够等问题导致训练效果不好时，对图像数据进行数据增广。</p>
+<h2 id="1-图像数据扩充"><a href="#1-图像数据扩充" class="headerlink" title="1.图像数据扩充"></a>1.图像数据扩充</h2><h3 id="1-1-几何变换"><a href="#1-1-几何变换" class="headerlink" title="1.1 几何变换"></a>1.1 几何变换</h3><p>几何变换包括：旋转，平移，缩放，裁剪（只关注部分区域），填充（保证图像缩放的长宽比），左右翻转等。</p>
+<h3 id="1-2-噪声"><a href="#1-2-噪声" class="headerlink" title="1.2 噪声"></a>1.2 噪声</h3><p>对图像像素添加噪声扰动，例如椒盐噪声，高斯白噪声等。</p>
+<h3 id="1-3-颜色变换"><a href="#1-3-颜色变换" class="headerlink" title="1.3 颜色变换"></a>1.3 颜色变换</h3><p>在图像的RGB颜色空间上进行主成分分析，然后再每个像素的RGB上添加增量。</p>
+<h3 id="1-4-亮度"><a href="#1-4-亮度" class="headerlink" title="1.4 亮度"></a>1.4 亮度</h3><p>改变图像的亮度、清晰度、对比度、锐度、饱和度、色调等。降低模型对色彩的敏感。</p>
+<h3 id="1-5-特征"><a href="#1-5-特征" class="headerlink" title="1.5 特征"></a>1.5 特征</h3><p>除了直接在图像空间进行变换，还可以先对图像进行特征提取，然后在图像的特征空间进行变换。例如SMOTE（Synthetic Minority Over-sampling Technique）算法。</p>
+<h2 id="2-生成模型"><a href="#2-生成模型" class="headerlink" title="2.生成模型"></a>2.生成模型</h2><p>采用生成对抗网络生成图像数据。</p>
+<h2 id="3-迁移学习"><a href="#3-迁移学习" class="headerlink" title="3.迁移学习"></a>3.迁移学习</h2><p>如果有预训练好的模型，载入此模型。然后用小批量的训练数据进行微调（fine-tune），这是一种简单的迁移学习。</p>
 
       
     </div>
@@ -547,9 +447,7 @@ Q(Z) = C \cdot P(Z|X,\theta) \tag{2.5}</script><p>这个假设的含义是用一
       
         <div class="post-tags">
           
-            <a href="/tags/贝叶斯学派/" rel="tag"><i class="fa fa-tag"></i> 贝叶斯学派</a>
-          
-            <a href="/tags/最大似然估计/" rel="tag"><i class="fa fa-tag"></i> 最大似然估计</a>
+            <a href="/tags/方法论/" rel="tag"><i class="fa fa-tag"></i> 方法论</a>
           
         </div>
       
@@ -562,8 +460,8 @@ Q(Z) = C \cdot P(Z|X,\theta) \tag{2.5}</script><p>这个假设的含义是用一
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/26/Variational-Inference/" rel="next" title="Variational Inference">
-                <i class="fa fa-chevron-left"></i> Variational Inference
+              <a href="/2019/01/12/调参/" rel="next" title="调参">
+                <i class="fa fa-chevron-left"></i> 调参
               </a>
             
           </div>
@@ -571,10 +469,6 @@ Q(Z) = C \cdot P(Z|X,\theta) \tag{2.5}</script><p>这个假设的含义是用一
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/11/调试九法/" rel="prev" title="调试九法">
-                调试九法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -734,7 +628,7 @@ Q(Z) = C \cdot P(Z|X,\theta) \tag{2.5}</script><p>这个假设的含义是用一
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-最大似然视角"><span class="nav-text">1. 最大似然视角</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Jensen不等式"><span class="nav-text">1.1 Jensen不等式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-最大似然估计"><span class="nav-text">1.2 最大似然估计</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-相对熵视角"><span class="nav-text">2. 相对熵视角</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-相对熵"><span class="nav-text">2.1 相对熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-变分推断"><span class="nav-text">2.2 变分推断</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#数据增广"><span class="nav-text">数据增广</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-图像数据扩充"><span class="nav-text">1.图像数据扩充</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-几何变换"><span class="nav-text">1.1 几何变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-噪声"><span class="nav-text">1.2 噪声</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-颜色变换"><span class="nav-text">1.3 颜色变换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-亮度"><span class="nav-text">1.4 亮度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-特征"><span class="nav-text">1.5 特征</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-生成模型"><span class="nav-text">2.生成模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-迁移学习"><span class="nav-text">3.迁移学习</span></a></li></ol></li></ol></div>
             
 
           </div>
